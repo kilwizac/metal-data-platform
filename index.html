@@ -1,0 +1,1503 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+  />
+  <title>SpecFoundry | Sheet Metal Gauge Reference</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --bg: radial-gradient(circle at top, #1d4ed8, #0f172a 58%);
+      --surface: rgba(15, 23, 42, 0.82);
+      --surface-soft: rgba(30, 41, 59, 0.65);
+      --stroke: rgba(148, 163, 184, 0.25);
+      --accent: #2563eb;
+      --accent-soft: rgba(37, 99, 235, 0.18);
+      --text: #f8fafc;
+      --muted: rgba(226, 232, 240, 0.78);
+      --shadow: 0 35px 65px rgba(15, 23, 42, 0.32);
+      font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: var(--bg);
+      color: var(--text);
+      display: flex;
+      justify-content: center;
+      padding: clamp(1rem, 4vw, 2rem);
+    }
+
+    .page {
+      width: min(1100px, 100%);
+      display: grid;
+      gap: clamp(1rem, 3vw, 1.4rem);
+    }
+
+    .top-bar,
+    .card,
+    .table-container {
+      position: relative;
+      overflow: hidden;
+      background-clip: padding-box;
+    }
+
+    .top-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: clamp(0.85rem, 2.6vw, 1.2rem) clamp(1rem, 3vw, 1.6rem);
+      border-radius: 16px;
+      background: var(--surface);
+      border: 1px solid var(--stroke);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(18px);
+    }
+
+    .top-brand {
+      display: flex;
+      align-items: center;
+      gap: 0.85rem;
+    }
+
+    .brand-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 2.1rem;
+      height: 2.1rem;
+      border-radius: 0.75rem;
+      background: linear-gradient(135deg, rgba(226, 232, 240, 0.85), rgba(148, 163, 184, 0.6));
+      color: #1f2933;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.55);
+    }
+
+    .brand-text {
+      display: flex;
+      flex-direction: column;
+      line-height: 1.05;
+      gap: 0.35rem;
+    }
+
+    .brand-name {
+      margin: 0;
+      display: inline-block;
+      font-size: clamp(1.5rem, 3.3vw, 2.05rem);
+      font-weight: 660;
+      text-transform: uppercase;
+      letter-spacing: 0.085em;
+      background: linear-gradient(115deg, #e2e8f0 0%, #cbd5e1 40%, #94a3b8 100%);
+      -webkit-background-clip: text;
+      color: transparent;
+      text-shadow: 0 2px 6px rgba(15, 23, 42, 0.38), 0 1px 0 rgba(255, 255, 255, 0.22);
+      line-height: 1;
+    }
+
+    .brand-name::after {
+      content: "";
+      display: block;
+      height: 2px;
+      margin-top: 0.22rem;
+      width: 38%;
+      min-width: 100px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, rgba(148, 163, 184, 0.85), rgba(51, 65, 85, 0.9));
+      box-shadow: 0 1px 4px rgba(15, 23, 42, 0.45);
+    }
+
+    .brand-tagline {
+      color: var(--muted);
+      font-size: 0.78rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+    }
+
+    .primary-nav {
+      display: inline-flex;
+      gap: 0.4rem;
+      padding: 0.3rem;
+      background: rgba(15, 23, 42, 0.55);
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.25);
+      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.05);
+    }
+
+    .primary-nav button {
+      border: none;
+      border-radius: 999px;
+      padding: 0.5rem 1.3rem;
+      background: transparent;
+      color: var(--muted);
+      font-size: 0.92rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background 0.25s ease, color 0.25s ease;
+    }
+
+    .primary-nav button.active {
+      background: var(--accent-soft);
+      color: var(--text);
+    }
+
+    .primary-nav button:focus-visible {
+      outline: 2px solid rgba(37, 99, 235, 0.7);
+      outline-offset: 2px;
+    }
+
+    .content {
+      display: grid;
+      gap: clamp(1rem, 3vw, 1.4rem);
+    }
+
+    .content-panel[hidden] {
+      display: none;
+    }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--stroke);
+      border-radius: 18px;
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(22px);
+    }
+
+    .card-header {
+      position: relative;
+      display: grid;
+      grid-template-columns: minmax(260px, 1fr) auto;
+      align-items: start;
+      gap: 1rem;
+      padding: clamp(1rem, 2.5vw, 1.4rem) clamp(1rem, 3vw, 1.8rem);
+      border-bottom: 1px solid var(--stroke);
+      background: linear-gradient(125deg, rgba(37, 99, 235, 0.24), rgba(15, 23, 42, 0.7));
+    }
+
+    .card-header::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(140deg, rgba(148, 163, 184, 0.12), transparent 65%);
+      pointer-events: none;
+    }
+
+    .card-header > * {
+      position: relative;
+      z-index: 1;
+    }
+
+    .card-header > .tabs {
+      justify-self: end;
+      max-width: min(100%, 520px);
+    }
+
+    .card-header > .shape-tabs {
+      justify-self: stretch;
+      max-width: none;
+    }
+
+    .card-header h2 {
+      margin: 0;
+      font-size: clamp(1.3rem, 3vw, 1.7rem);
+      font-weight: 600;
+    }
+
+    .card-header p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.92rem;
+      max-width: 520px;
+      line-height: 1.45;
+    }
+
+    .tabs {
+      display: inline-flex;
+      padding: 0.3rem;
+      background: rgba(15, 23, 42, 0.55);
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.25);
+      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.06);
+      gap: 0.3rem;
+      max-width: 100%;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+    }
+
+    .shape-tabs {
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 0.3rem;
+      padding: 0.3rem;
+      max-width: none;
+      margin: 0;
+    }
+
+    .shape-tabs button {
+      flex: 0 0 auto;
+      min-width: 120px;
+      padding: 0.45rem 1.2rem;
+      font-size: 0.92rem;
+      text-align: center;
+      white-space: nowrap;
+    }
+
+    .tabs::-webkit-scrollbar {
+      display: none;
+    }
+
+    .tabs button {
+      border: none;
+      border-radius: 999px;
+      padding: 0.45rem 1.35rem;
+      background: transparent;
+      color: var(--muted);
+      font-size: 0.95rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background 0.25s ease, color 0.25s ease;
+    }
+
+    .tabs button.active {
+      background: var(--accent-soft);
+      color: var(--text);
+    }
+
+    .tabs button:focus-visible {
+      outline: 2px solid rgba(37, 99, 235, 0.7);
+      outline-offset: 2px;
+    }
+
+    .card-body {
+      padding: clamp(1rem, 3vw, 1.75rem);
+      display: grid;
+      gap: clamp(0.75rem, 2vw, 1.1rem);
+    }
+
+    .card-intro {
+      margin: 0;
+      max-width: 640px;
+      color: var(--muted);
+      line-height: 1.5;
+      font-size: 0.95rem;
+    }
+
+    .table-container {
+      border: 1px solid rgba(148, 163, 184, 0.24);
+      border-radius: 16px;
+      background: var(--surface-soft);
+      backdrop-filter: blur(18px);
+      max-height: clamp(50vh, 65vh, 640px);
+    }
+
+    .table-container::before,
+    .table-container::after {
+      content: "";
+      position: sticky;
+      left: 0;
+      right: 0;
+      height: 1.2rem;
+      pointer-events: none;
+      z-index: 2;
+    }
+
+    .table-container::before {
+      top: 0;
+      background: linear-gradient(to bottom, rgba(15, 23, 42, 0.85), transparent);
+    }
+
+    .table-container::after {
+      bottom: 0;
+      background: linear-gradient(to top, rgba(15, 23, 42, 0.85), transparent);
+    }
+
+    .table-scroll {
+      overflow: auto;
+      max-height: inherit;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.9rem;
+      min-width: 520px;
+    }
+
+    thead {
+      background: linear-gradient(135deg, rgba(37, 99, 235, 0.35), rgba(37, 99, 235, 0.25));
+      color: var(--text);
+    }
+
+    thead th {
+      position: sticky;
+      top: 0;
+      background: linear-gradient(135deg, rgba(37, 99, 235, 0.88), rgba(37, 99, 235, 0.66));
+      z-index: 3;
+      box-shadow: 0 2px 6px rgba(15, 23, 42, 0.35);
+    }
+
+    th,
+    td {
+      padding: 0.6rem 0.95rem;
+      border-bottom: 1px solid rgba(148, 163, 184, 0.18);
+      white-space: nowrap;
+    }
+
+    th {
+      text-align: left;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      color: var(--text);
+    }
+
+    tbody tr:last-child td {
+      border-bottom: none;
+    }
+
+    tbody tr:nth-child(even) {
+      background: rgba(148, 163, 184, 0.12);
+    }
+
+    tbody tr:hover {
+      background: rgba(37, 99, 235, 0.24);
+      transition: background 0.2s ease;
+    }
+
+    .gauge-table[hidden] {
+      display: none !important;
+    }
+
+    .drill-table[hidden] {
+      display: none !important;
+    }
+
+    .calc-form {
+      display: grid;
+      gap: 1.2rem;
+      align-content: start;
+      max-width: 620px;
+    }
+
+    .input-group {
+      display: grid;
+      gap: 0.35rem;
+    }
+
+    .input-group label {
+      font-size: 0.9rem;
+      color: rgba(226, 232, 240, 0.85);
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .input-group input,
+    .input-group select {
+      width: 100%;
+      padding: 0.55rem 0.85rem;
+      border-radius: 10px;
+      border: 1px solid rgba(148, 163, 184, 0.35);
+      background: rgba(15, 23, 42, 0.4);
+      color: var(--text);
+      font-size: 0.95rem;
+      transition: border 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .input-group.invalid label {
+      color: #fca5a5;
+    }
+
+    .input-group.invalid input,
+    .input-group.invalid select,
+    input.input-invalid,
+    select.input-invalid {
+      border-color: rgba(239, 68, 68, 0.65);
+      box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.25);
+    }
+
+    .input-group select {
+      appearance: none;
+      padding-right: 2.2rem;
+      background-image: linear-gradient(45deg, transparent 50%, rgba(37, 99, 235, 0.8) 50%),
+        linear-gradient(135deg, rgba(37, 99, 235, 0.8) 50%, transparent 50%),
+        linear-gradient(0deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.1));
+      background-position: calc(100% - 1.1rem) center, calc(100% - 0.75rem) center, center;
+      background-size: 0.4rem 0.4rem, 0.4rem 0.4rem, 100% 100%;
+      background-repeat: no-repeat;
+      cursor: pointer;
+    }
+
+    .input-group input:focus,
+    .input-group select:focus {
+      outline: none;
+      border-color: rgba(37, 99, 235, 0.9);
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.25);
+    }
+
+    .input-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 0.9rem;
+    }
+
+    .shape-fields[hidden] {
+      display: none;
+    }
+
+    .calc-status {
+      padding: 0.65rem 0.9rem;
+      border-radius: 10px;
+      border: 1px solid rgba(148, 163, 184, 0.25);
+      background: rgba(15, 23, 42, 0.45);
+      color: rgba(226, 232, 240, 0.85);
+      font-size: 0.85rem;
+      line-height: 1.4;
+    }
+
+    .calc-status[data-state="info"] {
+      border-color: rgba(37, 99, 235, 0.45);
+      background: rgba(37, 99, 235, 0.16);
+      color: rgba(226, 232, 240, 0.9);
+    }
+
+    .calc-status[data-state="error"] {
+      border-color: rgba(239, 68, 68, 0.55);
+      background: rgba(239, 68, 68, 0.18);
+      color: #fee2e2;
+    }
+
+    .calc-status[data-state="success"] {
+      border-color: rgba(16, 185, 129, 0.55);
+      background: rgba(16, 185, 129, 0.18);
+      color: rgba(209, 250, 229, 0.9);
+    }
+
+    .calc-status[hidden] {
+      display: none;
+    }
+
+    .calc-result {
+      margin-top: 0.2rem;
+      padding: 0.9rem 1rem;
+      border-radius: 12px;
+      border: 1px solid rgba(148, 163, 184, 0.25);
+      background: rgba(15, 23, 42, 0.55);
+      display: grid;
+      gap: 0.7rem;
+      font-size: 0.95rem;
+    }
+
+    .calc-result .result-row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: baseline;
+      gap: 0.45rem;
+    }
+
+    .calc-result .result-label {
+      font-size: 0.78rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: rgba(226, 232, 240, 0.7);
+    }
+
+    .calc-result .result-primary {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    .calc-result .result-secondary {
+      font-size: 0.85rem;
+      color: rgba(226, 232, 240, 0.78);
+    }
+
+    .calc-note {
+      margin: 0;
+      font-size: 0.85rem;
+      color: rgba(226, 232, 240, 0.65);
+    }
+
+    footer {
+      text-align: center;
+      font-size: 0.92rem;
+      color: var(--muted);
+      background: rgba(15, 23, 42, 0.6);
+      border-radius: 16px;
+      border: 1px solid var(--stroke);
+      padding: 0.9rem 1.1rem;
+      box-shadow: var(--shadow);
+    }
+
+    @media (max-width: 900px) {
+      .card-header {
+        grid-template-columns: 1fr;
+        align-items: flex-start;
+      }
+
+      .card-header > .tabs {
+        justify-self: stretch;
+      }
+
+      .tabs {
+        justify-content: space-between;
+      }
+
+      .tabs button {
+        flex: 1 1 auto;
+        padding-inline: 1rem;
+      }
+
+      .shape-tabs {
+        justify-content: center;
+        max-width: 100%;
+        margin: 0;
+      }
+
+      .shape-tabs button {
+        flex: 1 1 calc(50% - 0.5rem);
+        padding: 0.35rem 0.75rem;
+      }
+    }
+
+    @media (max-width: 620px) {
+      body {
+        padding: clamp(0.75rem, 4vw, 1.2rem);
+      }
+
+      .top-brand {
+        flex-wrap: wrap;
+      }
+
+      .brand-badge {
+        width: 2rem;
+        height: 2rem;
+      }
+
+      table {
+        min-width: 460px;
+      }
+
+      .shape-tabs button {
+        flex: 1 1 100%;
+        padding: 0.35rem 0.7rem;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header class="top-bar">
+      <div class="top-brand">
+        <span class="brand-badge" aria-hidden="true">SF</span>
+        <div class="brand-text">
+          <span class="brand-name">SpecFoundry</span>
+          <span class="brand-tagline">Metal Data Platform</span>
+        </div>
+      </div>
+      <nav class="primary-nav" role="tablist" aria-label="Primary">
+        <button
+          type="button"
+          id="tab-reference"
+          class="active"
+          role="tab"
+          aria-selected="true"
+          aria-controls="reference-panel"
+          tabindex="0"
+          data-panel="reference-panel"
+        >
+          Gauge Reference
+        </button>
+        <button
+          type="button"
+          id="tab-calculator"
+          role="tab"
+          aria-selected="false"
+          aria-controls="calculator-panel"
+          tabindex="-1"
+          data-panel="calculator-panel"
+        >
+          Weight Calculator
+        </button>
+        <button
+          type="button"
+          id="tab-drill"
+          role="tab"
+          aria-selected="false"
+          aria-controls="drill-panel"
+          tabindex="-1"
+          data-panel="drill-panel"
+        >
+          Drill & Tap Chart
+        </button>
+      </nav>
+    </header>
+
+    <main class="content">
+      <section
+        id="reference-panel"
+        class="content-panel"
+        data-panel
+        role="tabpanel"
+        aria-labelledby="tab-reference"
+        aria-hidden="false"
+        tabindex="0"
+      >
+        <article class="card">
+          <div class="card-header">
+            <div>
+              <h2 id="panel-title">Mild Steel Gauge Chart</h2>
+              <p id="panel-description">Compare gauges using imperial and metric thickness alongside estimated weight per square foot.</p>
+            </div>
+            <div class="tabs" role="tablist" aria-label="Material selection">
+              <button type="button" class="active" data-group="gauge" data-target="mild-steel" aria-controls="mild-steel" aria-selected="true" role="tab" tabindex="0">Mild Steel</button>
+              <button type="button" data-group="gauge" data-target="stainless-steel" aria-controls="stainless-steel" aria-selected="false" role="tab" tabindex="-1">Stainless Steel</button>
+              <button type="button" data-group="gauge" data-target="aluminum" aria-controls="aluminum" aria-selected="false" role="tab" tabindex="-1">Aluminum</button>
+            </div>
+          </div>
+
+          <div class="card-body">
+            <p class="card-intro">Quickly scan typical gauge thickness and weight values for mild steel, stainless, and aluminum without excessive scrolling.</p>
+
+            <div class="table-container">
+              <div class="table-scroll">
+                <section id="mild-steel" class="gauge-table" role="tabpanel" aria-hidden="false" aria-labelledby="panel-title" aria-describedby="panel-description">
+                  <table>
+                    <thead>
+                      <tr>
+                        <th scope="col">Gauge</th>
+                        <th scope="col">Thickness (in)</th>
+                        <th scope="col">Thickness (mm)</th>
+                        <th scope="col">Weight (lb/ft²)</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr><td>3</td><td>0.2391</td><td>6.07</td><td>9.76</td></tr>
+                      <tr><td>4</td><td>0.2242</td><td>5.69</td><td>9.15</td></tr>
+                      <tr><td>5</td><td>0.2092</td><td>5.31</td><td>8.54</td></tr>
+                      <tr><td>6</td><td>0.1943</td><td>4.94</td><td>7.93</td></tr>
+                      <tr><td>7</td><td>0.1793</td><td>4.55</td><td>7.32</td></tr>
+                      <tr><td>8</td><td>0.1644</td><td>4.18</td><td>6.71</td></tr>
+                      <tr><td>9</td><td>0.1495</td><td>3.80</td><td>6.10</td></tr>
+                      <tr><td>10</td><td>0.1345</td><td>3.42</td><td>5.49</td></tr>
+                      <tr><td>11</td><td>0.1196</td><td>3.04</td><td>4.88</td></tr>
+                      <tr><td>12</td><td>0.1046</td><td>2.66</td><td>4.27</td></tr>
+                      <tr><td>13</td><td>0.0897</td><td>2.28</td><td>3.66</td></tr>
+                      <tr><td>14</td><td>0.0747</td><td>1.90</td><td>3.05</td></tr>
+                      <tr><td>15</td><td>0.0673</td><td>1.71</td><td>2.75</td></tr>
+                      <tr><td>16</td><td>0.0598</td><td>1.52</td><td>2.44</td></tr>
+                      <tr><td>17</td><td>0.0538</td><td>1.37</td><td>2.20</td></tr>
+                      <tr><td>18</td><td>0.0478</td><td>1.21</td><td>1.95</td></tr>
+                      <tr><td>19</td><td>0.0418</td><td>1.06</td><td>1.71</td></tr>
+                      <tr><td>20</td><td>0.0359</td><td>0.91</td><td>1.46</td></tr>
+                      <tr><td>21</td><td>0.0329</td><td>0.84</td><td>1.34</td></tr>
+                      <tr><td>22</td><td>0.0299</td><td>0.76</td><td>1.22</td></tr>
+                      <tr><td>23</td><td>0.0269</td><td>0.68</td><td>1.10</td></tr>
+                      <tr><td>24</td><td>0.0239</td><td>0.61</td><td>0.98</td></tr>
+                      <tr><td>25</td><td>0.0209</td><td>0.53</td><td>0.85</td></tr>
+                      <tr><td>26</td><td>0.0179</td><td>0.45</td><td>0.73</td></tr>
+                      <tr><td>27</td><td>0.0172</td><td>0.44</td><td>0.70</td></tr>
+                      <tr><td>28</td><td>0.0149</td><td>0.38</td><td>0.61</td></tr>
+                      <tr><td>29</td><td>0.0135</td><td>0.34</td><td>0.55</td></tr>
+                      <tr><td>30</td><td>0.0120</td><td>0.30</td><td>0.49</td></tr>
+                    </tbody>
+                  </table>
+                </section>
+
+                <section id="stainless-steel" class="gauge-table" hidden role="tabpanel" aria-hidden="true" aria-labelledby="panel-title" aria-describedby="panel-description">
+                  <table>
+                    <thead>
+                      <tr>
+                        <th scope="col">Gauge</th>
+                        <th scope="col">Thickness (in)</th>
+                        <th scope="col">Thickness (mm)</th>
+                        <th scope="col">Weight (lb/ft²)</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr><td>3</td><td>0.2500</td><td>6.35</td><td>10.46</td></tr>
+                      <tr><td>4</td><td>0.2344</td><td>5.95</td><td>9.80</td></tr>
+                      <tr><td>5</td><td>0.2187</td><td>5.55</td><td>9.15</td></tr>
+                      <tr><td>6</td><td>0.2031</td><td>5.16</td><td>8.49</td></tr>
+                      <tr><td>7</td><td>0.1875</td><td>4.76</td><td>7.84</td></tr>
+                      <tr><td>8</td><td>0.1719</td><td>4.37</td><td>7.19</td></tr>
+                      <tr><td>9</td><td>0.1562</td><td>3.97</td><td>6.53</td></tr>
+                      <tr><td>10</td><td>0.1406</td><td>3.57</td><td>5.88</td></tr>
+                      <tr><td>11</td><td>0.1250</td><td>3.18</td><td>5.23</td></tr>
+                      <tr><td>12</td><td>0.1094</td><td>2.78</td><td>4.58</td></tr>
+                      <tr><td>13</td><td>0.0938</td><td>2.38</td><td>3.92</td></tr>
+                      <tr><td>14</td><td>0.0781</td><td>1.98</td><td>3.27</td></tr>
+                      <tr><td>15</td><td>0.0703</td><td>1.79</td><td>2.94</td></tr>
+                      <tr><td>16</td><td>0.0625</td><td>1.59</td><td>2.61</td></tr>
+                      <tr><td>17</td><td>0.0563</td><td>1.43</td><td>2.35</td></tr>
+                      <tr><td>18</td><td>0.0500</td><td>1.27</td><td>2.09</td></tr>
+                      <tr><td>19</td><td>0.0438</td><td>1.11</td><td>1.83</td></tr>
+                      <tr><td>20</td><td>0.0375</td><td>0.95</td><td>1.57</td></tr>
+                      <tr><td>21</td><td>0.0344</td><td>0.87</td><td>1.44</td></tr>
+                      <tr><td>22</td><td>0.0313</td><td>0.80</td><td>1.31</td></tr>
+                      <tr><td>23</td><td>0.0281</td><td>0.71</td><td>1.18</td></tr>
+                      <tr><td>24</td><td>0.0250</td><td>0.64</td><td>1.05</td></tr>
+                      <tr><td>25</td><td>0.0219</td><td>0.56</td><td>0.92</td></tr>
+                      <tr><td>26</td><td>0.0188</td><td>0.48</td><td>0.79</td></tr>
+                      <tr><td>27</td><td>0.0172</td><td>0.44</td><td>0.72</td></tr>
+                      <tr><td>28</td><td>0.0156</td><td>0.40</td><td>0.65</td></tr>
+                      <tr><td>29</td><td>0.0141</td><td>0.36</td><td>0.59</td></tr>
+                      <tr><td>30</td><td>0.0125</td><td>0.32</td><td>0.52</td></tr>
+                    </tbody>
+                  </table>
+                </section>
+
+                <section id="aluminum" class="gauge-table" hidden role="tabpanel" aria-hidden="true" aria-labelledby="panel-title" aria-describedby="panel-description">
+                  <table>
+                    <thead>
+                      <tr>
+                        <th scope="col">Gauge</th>
+                        <th scope="col">Thickness (in)</th>
+                        <th scope="col">Thickness (mm)</th>
+                        <th scope="col">Weight (lb/ft²)</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr><td>3</td><td>0.2294</td><td>5.83</td><td>3.23</td></tr>
+                      <tr><td>4</td><td>0.2043</td><td>5.19</td><td>2.88</td></tr>
+                      <tr><td>5</td><td>0.1819</td><td>4.62</td><td>2.56</td></tr>
+                      <tr><td>6</td><td>0.1620</td><td>4.11</td><td>2.28</td></tr>
+                      <tr><td>7</td><td>0.1443</td><td>3.67</td><td>2.03</td></tr>
+                      <tr><td>8</td><td>0.1285</td><td>3.26</td><td>1.81</td></tr>
+                      <tr><td>9</td><td>0.1144</td><td>2.91</td><td>1.61</td></tr>
+                      <tr><td>10</td><td>0.1019</td><td>2.59</td><td>1.44</td></tr>
+                      <tr><td>11</td><td>0.0907</td><td>2.30</td><td>1.28</td></tr>
+                      <tr><td>12</td><td>0.0808</td><td>2.05</td><td>1.14</td></tr>
+                      <tr><td>13</td><td>0.0720</td><td>1.83</td><td>1.02</td></tr>
+                      <tr><td>14</td><td>0.0641</td><td>1.63</td><td>0.90</td></tr>
+                      <tr><td>15</td><td>0.0571</td><td>1.45</td><td>0.81</td></tr>
+                      <tr><td>16</td><td>0.0508</td><td>1.29</td><td>0.72</td></tr>
+                      <tr><td>17</td><td>0.0453</td><td>1.15</td><td>0.64</td></tr>
+                      <tr><td>18</td><td>0.0403</td><td>1.02</td><td>0.57</td></tr>
+                      <tr><td>19</td><td>0.0359</td><td>0.91</td><td>0.51</td></tr>
+                      <tr><td>20</td><td>0.0320</td><td>0.81</td><td>0.45</td></tr>
+                      <tr><td>21</td><td>0.0285</td><td>0.72</td><td>0.40</td></tr>
+                      <tr><td>22</td><td>0.0253</td><td>0.64</td><td>0.36</td></tr>
+                      <tr><td>23</td><td>0.0226</td><td>0.57</td><td>0.32</td></tr>
+                      <tr><td>24</td><td>0.0201</td><td>0.51</td><td>0.28</td></tr>
+                      <tr><td>25</td><td>0.0179</td><td>0.45</td><td>0.25</td></tr>
+                      <tr><td>26</td><td>0.0159</td><td>0.40</td><td>0.22</td></tr>
+                      <tr><td>27</td><td>0.0142</td><td>0.36</td><td>0.20</td></tr>
+                      <tr><td>28</td><td>0.0126</td><td>0.32</td><td>0.18</td></tr>
+                      <tr><td>29</td><td>0.0113</td><td>0.29</td><td>0.16</td></tr>
+                      <tr><td>30</td><td>0.0100</td><td>0.25</td><td>0.14</td></tr>
+                    </tbody>
+                  </table>
+                </section>
+              </div>
+            </div>
+          </div>
+        </article>
+      </section>
+
+      <section
+        id="calculator-panel"
+        class="content-panel"
+        data-panel
+        role="tabpanel"
+        aria-labelledby="tab-calculator"
+        aria-hidden="true"
+        tabindex="-1"
+        hidden
+      >
+        <article class="card">
+          <div class="card-header">
+            <div>
+              <h2>Sheet & Bar Weight Calculator</h2>
+              <p>Estimate flat, bar, or tube weights using common stock dimensions and densities.</p>
+            </div>
+            <div class="tabs shape-tabs" role="tablist" aria-label="Shape selection">
+              <button type="button" class="active" id="shape-sheet" data-shape="sheet" role="tab" aria-selected="true" tabindex="0">Sheet / Plate</button>
+              <button type="button" id="shape-round" data-shape="round-bar" role="tab" aria-selected="false" tabindex="-1">Round Bar</button>
+              <button type="button" id="shape-rect" data-shape="rect-bar" role="tab" aria-selected="false" tabindex="-1">Rectangular Bar</button>
+              <button type="button" id="shape-round-tube" data-shape="round-tube" role="tab" aria-selected="false" tabindex="-1">Round Tube</button>
+              <button type="button" id="shape-rect-tube" data-shape="rect-tube" role="tab" aria-selected="false" tabindex="-1">Rectangular Tube</button>
+            </div>
+          </div>
+
+          <div class="card-body">
+            <p class="card-intro">Enter dimensions in inches. Weight is calculated using nominal densities for mild steel, stainless steel, and aluminum.</p>
+
+            <form class="calc-form" id="weight-form" novalidate>
+              <div class="input-group">
+                <label for="material">Material</label>
+                <select id="material" name="material">
+                  <option value="mild-steel">Mild Steel</option>
+                  <option value="stainless-steel">Stainless Steel</option>
+                  <option value="aluminum">Aluminum</option>
+                </select>
+              </div>
+
+              <div class="shape-fields" data-shape="sheet" role="tabpanel" aria-hidden="false" aria-labelledby="shape-sheet">
+                <div class="input-row">
+                  <div class="input-group">
+                    <label for="sheet-length">Length (in)</label>
+                    <input type="number" id="sheet-length" data-dim="length" min="0" step="any" placeholder="e.g. 48" />
+                  </div>
+                  <div class="input-group">
+                    <label for="sheet-width">Width (in)</label>
+                    <input type="number" id="sheet-width" data-dim="width" min="0" step="any" placeholder="e.g. 36" />
+                  </div>
+                  <div class="input-group">
+                    <label for="sheet-thickness">Thickness (in)</label>
+                    <input type="number" id="sheet-thickness" data-dim="thickness" min="0" step="any" placeholder="e.g. 0.125" />
+                  </div>
+                </div>
+              </div>
+
+              <div class="shape-fields" data-shape="round-bar" role="tabpanel" aria-hidden="true" aria-labelledby="shape-round" hidden>
+                <div class="input-row">
+                  <div class="input-group">
+                    <label for="round-diameter">Diameter (in)</label>
+                    <input type="number" id="round-diameter" data-dim="diameter" min="0" step="any" placeholder="e.g. 2" />
+                  </div>
+                  <div class="input-group">
+                    <label for="round-length">Length (in)</label>
+                    <input type="number" id="round-length" data-dim="length" min="0" step="any" placeholder="e.g. 36" />
+                  </div>
+                </div>
+              </div>
+
+              <div class="shape-fields" data-shape="rect-bar" role="tabpanel" aria-hidden="true" aria-labelledby="shape-rect" hidden>
+                <div class="input-row">
+                  <div class="input-group">
+                    <label for="rect-width">Width (in)</label>
+                    <input type="number" id="rect-width" data-dim="width" min="0" step="any" placeholder="e.g. 4" />
+                  </div>
+                  <div class="input-group">
+                    <label for="rect-height">Height (in)</label>
+                    <input type="number" id="rect-height" data-dim="height" min="0" step="any" placeholder="e.g. 2" />
+                  </div>
+                  <div class="input-group">
+                    <label for="rect-length">Length (in)</label>
+                    <input type="number" id="rect-length" data-dim="length" min="0" step="any" placeholder="e.g. 72" />
+                  </div>
+                </div>
+              </div>
+
+              <div class="shape-fields" data-shape="round-tube" role="tabpanel" aria-hidden="true" aria-labelledby="shape-round-tube" hidden>
+                <div class="input-row">
+                  <div class="input-group">
+                    <label for="tube-outer">Outer Diameter (in)</label>
+                    <input type="number" id="tube-outer" data-dim="outerDiameter" min="0" step="any" placeholder="e.g. 3" />
+                  </div>
+                  <div class="input-group">
+                    <label for="tube-wall">Wall (in)</label>
+                    <input type="number" id="tube-wall" data-dim="wall" min="0" step="any" placeholder="e.g. 0.25" />
+                  </div>
+                  <div class="input-group">
+                    <label for="tube-length">Length (in)</label>
+                    <input type="number" id="tube-length" data-dim="length" min="0" step="any" placeholder="e.g. 60" />
+                  </div>
+                </div>
+              </div>
+
+              <div class="shape-fields" data-shape="rect-tube" role="tabpanel" aria-hidden="true" aria-labelledby="shape-rect-tube" hidden>
+                <div class="input-row">
+                  <div class="input-group">
+                    <label for="rect-tube-width">Width (in)</label>
+                    <input type="number" id="rect-tube-width" data-dim="width" min="0" step="any" placeholder="e.g. 4" />
+                  </div>
+                  <div class="input-group">
+                    <label for="rect-tube-height">Height (in)</label>
+                    <input type="number" id="rect-tube-height" data-dim="height" min="0" step="any" placeholder="e.g. 3" />
+                  </div>
+                  <div class="input-group">
+                    <label for="rect-tube-wall">Wall (in)</label>
+                    <input type="number" id="rect-tube-wall" data-dim="wall" min="0" step="any" placeholder="e.g. 0.1875" />
+                  </div>
+                  <div class="input-group">
+                    <label for="rect-tube-length">Length (in)</label>
+                    <input type="number" id="rect-tube-length" data-dim="length" min="0" step="any" placeholder="e.g. 96" />
+                  </div>
+                </div>
+              </div>
+
+              <div class="calc-status" id="calc-status" role="status" aria-live="polite" hidden></div>
+
+              <div class="calc-result" id="calc-output" aria-live="polite">
+                <div class="result-row">
+                  <span class="result-label">Total Weight</span>
+                  <span class="result-primary" id="weight-lb">-- lb</span>
+                  <span class="result-secondary" id="weight-kg">-- kg</span>
+                </div>
+                <div class="result-row">
+                  <span class="result-label">Volume</span>
+                  <span class="result-primary" id="volume-in3">-- in³</span>
+                </div>
+                <div class="result-row" id="unit-weight-row" hidden>
+                  <span class="result-label" id="unit-weight-label">Unit Weight</span>
+                  <span class="result-primary" id="unit-weight">--</span>
+                </div>
+              </div>
+
+              <p class="calc-note">Nominal densities: Mild Steel 0.284 lb/in³, Stainless Steel 0.290 lb/in³, Aluminum 0.0975 lb/in³.</p>
+            </form>
+          </div>
+        </article>
+      </section>
+
+      <section
+        id="drill-panel"
+        class="content-panel"
+        data-panel
+        role="tabpanel"
+        aria-labelledby="tab-drill"
+        aria-hidden="true"
+        tabindex="-1"
+        hidden
+      >
+        <article class="card">
+          <div class="card-header">
+            <div>
+              <h2 id="drill-title">UNC Thread Tap Chart</h2>
+              <p>Match coarse and fine thread sizes with recommended tap drills and close-fit clearances.</p>
+            </div>
+            <div class="tabs" role="tablist" aria-label="Thread series">
+              <button type="button" class="active" data-group="drill" data-target="drill-unc" aria-controls="drill-unc" aria-selected="true" role="tab" tabindex="0">UNC Threads</button>
+              <button type="button" data-group="drill" data-target="drill-unf" aria-controls="drill-unf" aria-selected="false" role="tab" tabindex="-1">UNF Threads</button>
+            </div>
+          </div>
+
+          <div class="card-body">
+            <p class="card-intro">Values follow common practices for tapping 75% thread engagement in steel. Verify against job specifications before cutting.</p>
+
+            <div class="table-container">
+              <div class="table-scroll">
+                <section id="drill-unc" class="drill-table" role="tabpanel" aria-hidden="false" aria-labelledby="drill-title">
+                  <table>
+                    <thead>
+                      <tr>
+                        <th scope="col">Screw Size</th>
+                        <th scope="col">Tap Drill (in)</th>
+                        <th scope="col">Tap Drill (mm)</th>
+                        <th scope="col">Close Fit Drill (in)</th>
+                        <th scope="col">Close Fit (mm)</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr><td>#0-80</td><td>0.0470</td><td>1.19</td><td>0.0600</td><td>1.52</td></tr>
+                      <tr><td>#1-64</td><td>0.0595</td><td>1.51</td><td>0.0730</td><td>1.85</td></tr>
+                      <tr><td>#2-56</td><td>0.0700</td><td>1.78</td><td>0.0860</td><td>2.18</td></tr>
+                      <tr><td>#3-48</td><td>0.0785</td><td>1.99</td><td>0.0990</td><td>2.51</td></tr>
+                      <tr><td>#4-40</td><td>0.0890</td><td>2.26</td><td>0.1110</td><td>2.82</td></tr>
+                      <tr><td>#5-40</td><td>0.0995</td><td>2.53</td><td>0.1250</td><td>3.18</td></tr>
+                      <tr><td>#6-32</td><td>0.1065</td><td>2.71</td><td>0.1400</td><td>3.56</td></tr>
+                      <tr><td>#8-32</td><td>0.1360</td><td>3.45</td><td>0.1640</td><td>4.17</td></tr>
+                      <tr><td>#10-24</td><td>0.1495</td><td>3.80</td><td>0.1900</td><td>4.83</td></tr>
+                      <tr><td>1/4-20</td><td>0.2010</td><td>5.11</td><td>0.2570</td><td>6.53</td></tr>
+                      <tr><td>5/16-18</td><td>0.2570</td><td>6.53</td><td>0.3230</td><td>8.20</td></tr>
+                      <tr><td>3/8-16</td><td>0.3125</td><td>7.94</td><td>0.3860</td><td>9.80</td></tr>
+                      <tr><td>7/16-14</td><td>0.3680</td><td>9.35</td><td>0.4380</td><td>11.13</td></tr>
+                      <tr><td>1/2-13</td><td>0.4219</td><td>10.72</td><td>0.5000</td><td>12.70</td></tr>
+                    </tbody>
+                  </table>
+                </section>
+
+                <section id="drill-unf" class="drill-table" role="tabpanel" aria-hidden="true" aria-labelledby="drill-title" hidden>
+                  <table>
+                    <thead>
+                      <tr>
+                        <th scope="col">Screw Size</th>
+                        <th scope="col">Tap Drill (in)</th>
+                        <th scope="col">Tap Drill (mm)</th>
+                        <th scope="col">Close Fit Drill (in)</th>
+                        <th scope="col">Close Fit (mm)</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr><td>#0-80</td><td>0.0470</td><td>1.19</td><td>0.0600</td><td>1.52</td></tr>
+                      <tr><td>#1-72</td><td>0.0550</td><td>1.40</td><td>0.0690</td><td>1.75</td></tr>
+                      <tr><td>#2-64</td><td>0.0670</td><td>1.70</td><td>0.0820</td><td>2.08</td></tr>
+                      <tr><td>#3-56</td><td>0.0760</td><td>1.93</td><td>0.0940</td><td>2.39</td></tr>
+                      <tr><td>#4-48</td><td>0.0860</td><td>2.18</td><td>0.1070</td><td>2.72</td></tr>
+                      <tr><td>#5-44</td><td>0.0960</td><td>2.44</td><td>0.1200</td><td>3.05</td></tr>
+                      <tr><td>#6-40</td><td>0.1065</td><td>2.71</td><td>0.1360</td><td>3.45</td></tr>
+                      <tr><td>#8-36</td><td>0.1285</td><td>3.26</td><td>0.1640</td><td>4.17</td></tr>
+                      <tr><td>#10-32</td><td>0.1590</td><td>4.04</td><td>0.1900</td><td>4.83</td></tr>
+                      <tr><td>1/4-28</td><td>0.2130</td><td>5.41</td><td>0.2570</td><td>6.53</td></tr>
+                      <tr><td>5/16-24</td><td>0.2720</td><td>6.91</td><td>0.3230</td><td>8.20</td></tr>
+                      <tr><td>3/8-24</td><td>0.3320</td><td>8.43</td><td>0.3860</td><td>9.80</td></tr>
+                      <tr><td>7/16-20</td><td>0.3860</td><td>9.80</td><td>0.4380</td><td>11.13</td></tr>
+                      <tr><td>1/2-20</td><td>0.4219</td><td>10.72</td><td>0.5000</td><td>12.70</td></tr>
+                    </tbody>
+                  </table>
+                </section>
+              </div>
+            </div>
+
+            <p class="calc-note">Use the tap drill closest in available letter, number, or fractional bit. Increase drill size slightly for hard alloys or high thread engagement requirements.</p>
+          </div>
+        </article>
+      </section>
+    </main>
+
+    <footer>
+      Reference values only. Confirm with applicable standards before use.
+    </footer>
+  </div>
+
+  <script>
+    const primaryNavButtons = Array.from(document.querySelectorAll('.primary-nav button'));
+    const contentPanels = Array.from(document.querySelectorAll('.content-panel'));
+
+    const gaugeTabs = Array.from(document.querySelectorAll('.tabs button[data-group="gauge"]'));
+    const gaugeTables = document.querySelectorAll('.gauge-table');
+    const panelTitle = document.getElementById('panel-title');
+
+    const drillTabs = Array.from(document.querySelectorAll('.tabs button[data-group="drill"]'));
+    const drillTables = document.querySelectorAll('.drill-table');
+    const drillTitle = document.getElementById('drill-title');
+
+    const shapeTabs = Array.from(document.querySelectorAll('.shape-tabs button'));
+    const shapePanels = Array.from(document.querySelectorAll('.shape-fields'));
+    const materialSelect = document.getElementById('material');
+    const weightLbOutput = document.getElementById('weight-lb');
+    const weightKgOutput = document.getElementById('weight-kg');
+    const volumeOutput = document.getElementById('volume-in3');
+    const unitWeightOutput = document.getElementById('unit-weight');
+    const unitWeightRow = document.getElementById('unit-weight-row');
+    const unitWeightLabel = document.getElementById('unit-weight-label');
+    const calcStatus = document.getElementById('calc-status');
+    const weightForm = document.getElementById('weight-form');
+
+    const densities = {
+      'mild-steel': 0.284,
+      'stainless-steel': 0.290,
+      'aluminum': 0.0975,
+    };
+
+    const formatNumber = (value) => (Number.isFinite(value) ? value.toLocaleString(undefined, { maximumFractionDigits: 2 }) : '--');
+
+    const formatList = (items) => {
+      if (!items || !items.length) return '';
+      if (items.length === 1) return items[0];
+      if (items.length === 2) return `${items[0]} and ${items[1]}`;
+      return `${items.slice(0, -1).join(', ')}, and ${items[items.length - 1]}`;
+    };
+
+    const setStatus = (state, message) => {
+      if (!calcStatus) return;
+      if (!message) {
+        calcStatus.textContent = '';
+        calcStatus.setAttribute('hidden', '');
+        delete calcStatus.dataset.state;
+        return;
+      }
+
+      calcStatus.textContent = message;
+      calcStatus.dataset.state = state;
+      calcStatus.removeAttribute('hidden');
+    };
+
+    const clearResult = () => {
+      if (weightLbOutput) weightLbOutput.textContent = '-- lb';
+      if (weightKgOutput) weightKgOutput.textContent = '-- kg';
+      if (volumeOutput) volumeOutput.textContent = '-- in³';
+      if (unitWeightOutput) unitWeightOutput.textContent = '--';
+      if (unitWeightLabel) unitWeightLabel.textContent = 'Unit Weight';
+      if (unitWeightRow) unitWeightRow.setAttribute('hidden', '');
+    };
+
+    const getVisibleFormControls = () => {
+      if (!weightForm) return [];
+      return Array.from(weightForm.querySelectorAll('input, select')).filter(
+        (element) =>
+          !element.disabled &&
+          element.type !== 'hidden' &&
+          !element.closest('[hidden]') &&
+          element.offsetParent !== null
+      );
+    };
+
+    const handleTabWrap = (event) => {
+      if (event.key !== 'Tab') return;
+
+      const controls = getVisibleFormControls();
+      if (!controls.length) return;
+
+      const currentIndex = controls.indexOf(event.currentTarget);
+      if (currentIndex === -1) return;
+
+      if (!event.shiftKey && currentIndex === controls.length - 1) {
+        event.preventDefault();
+        controls[0].focus();
+      } else if (event.shiftKey && currentIndex === 0) {
+        event.preventDefault();
+        controls[controls.length - 1].focus();
+      }
+    };
+
+    const getActiveShape = () => {
+      const activeTab = shapeTabs.find((tab) => tab.classList.contains('active'));
+      return activeTab ? activeTab.getAttribute('data-shape') : null;
+    };
+
+    const updateWeight = () => {
+      const activeShape = getActiveShape();
+      const shapePanel = activeShape ? shapePanels.find((panel) => panel.getAttribute('data-shape') === activeShape) : null;
+
+      if (!shapePanel) {
+        clearResult();
+        setStatus('info', 'Select a shape to begin.');
+        return;
+      }
+
+      const dims = {};
+      const inputs = Array.from(shapePanel.querySelectorAll('input[data-dim]'));
+      const missingFields = new Set();
+      const invalidFields = new Set();
+
+      inputs.forEach((input) => {
+        const group = input.closest('.input-group');
+        const label = group?.querySelector('label');
+        const labelText = label ? label.textContent.trim() : input.getAttribute('aria-label') || input.id;
+        const rawValue = input.value.trim();
+        const numericValue = parseFloat(rawValue);
+        const hasValue = rawValue.length > 0;
+        const isPositive = Number.isFinite(numericValue) && numericValue > 0;
+
+        if (!hasValue) {
+          missingFields.add(labelText);
+        } else if (!isPositive) {
+          invalidFields.add(labelText);
+        } else {
+          dims[input.getAttribute('data-dim')] = numericValue;
+        }
+
+        const shouldMarkInvalid = hasValue && !isPositive;
+        if (group) group.classList.toggle('invalid', shouldMarkInvalid);
+        input.classList.toggle('input-invalid', shouldMarkInvalid);
+      });
+
+      const densityKey = materialSelect.value;
+      const density = densities[densityKey];
+      if (!density) {
+        clearResult();
+        setStatus('info', 'Select a material to calculate weight.');
+        return;
+      }
+
+      if (invalidFields.size) {
+        clearResult();
+        setStatus('error', `Use positive values for ${formatList(Array.from(invalidFields))}.`);
+        return;
+      }
+
+      if (missingFields.size) {
+        clearResult();
+        setStatus('info', `Enter ${formatList(Array.from(missingFields))} to calculate weight.`);
+        return;
+      }
+
+      let volume = 0;
+
+      switch (activeShape) {
+        case 'sheet':
+          volume = dims.length * dims.width * dims.thickness;
+          break;
+        case 'round-bar':
+          volume = Math.PI * Math.pow(dims.diameter / 2, 2) * dims.length;
+          break;
+        case 'rect-bar':
+          volume = dims.width * dims.height * dims.length;
+          break;
+        case 'round-tube': {
+          const outerRadius = dims.outerDiameter / 2;
+          const innerRadius = outerRadius - dims.wall;
+          if (innerRadius <= 0) {
+            const wallInput = shapePanel.querySelector('input[data-dim="wall"]');
+            const wallGroup = wallInput?.closest('.input-group');
+            wallGroup?.classList.add('invalid');
+            wallInput?.classList.add('input-invalid');
+            const outerInput = shapePanel.querySelector('input[data-dim="outerDiameter"]');
+            outerInput?.closest('.input-group')?.classList.add('invalid');
+            outerInput?.classList.add('input-invalid');
+            clearResult();
+            setStatus('error', 'Wall thickness must be less than half of the outer diameter.');
+            return;
+          }
+          volume = Math.PI * (Math.pow(outerRadius, 2) - Math.pow(innerRadius, 2)) * dims.length;
+          break;
+        }
+        case 'rect-tube': {
+          const innerWidth = dims.width - 2 * dims.wall;
+          const innerHeight = dims.height - 2 * dims.wall;
+          if (innerWidth <= 0 || innerHeight <= 0) {
+            const wallInput = shapePanel.querySelector('input[data-dim="wall"]');
+            const wallGroup = wallInput?.closest('.input-group');
+            wallGroup?.classList.add('invalid');
+            wallInput?.classList.add('input-invalid');
+            const widthInput = shapePanel.querySelector('input[data-dim="width"]');
+            const heightInput = shapePanel.querySelector('input[data-dim="height"]');
+            widthInput?.closest('.input-group')?.classList.add('invalid');
+            widthInput?.classList.add('input-invalid');
+            heightInput?.closest('.input-group')?.classList.add('invalid');
+            heightInput?.classList.add('input-invalid');
+            clearResult();
+            setStatus('error', 'Wall thickness must be less than half of both width and height.');
+            return;
+          }
+          volume = (dims.width * dims.height - innerWidth * innerHeight) * dims.length;
+          break;
+        }
+        default:
+          volume = NaN;
+      }
+
+      if (!Number.isFinite(volume) || volume <= 0) {
+        clearResult();
+        setStatus('error', 'Unable to calculate volume with the provided dimensions.');
+        return;
+      }
+
+      const weightLb = volume * density;
+      const weightKg = weightLb * 0.45359237;
+      weightLbOutput.textContent = `${formatNumber(weightLb)} lb`;
+      weightKgOutput.textContent = `${formatNumber(weightKg)} kg`;
+      if (volumeOutput) volumeOutput.textContent = `${formatNumber(volume)} in³`;
+
+      let unitWeightValue = null;
+      let unitWeightLabelText = '';
+
+      if (activeShape === 'sheet') {
+        const areaSqFt = (dims.length * dims.width) / 144;
+        if (areaSqFt > 0) {
+          unitWeightValue = weightLb / areaSqFt;
+          unitWeightLabelText = 'Weight / sq ft';
+        }
+      } else if (typeof dims.length === 'number') {
+        const lengthFeet = dims.length / 12;
+        if (lengthFeet > 0) {
+          unitWeightValue = weightLb / lengthFeet;
+          unitWeightLabelText = 'Weight / ft';
+        }
+      }
+
+      if (unitWeightValue && unitWeightRow && unitWeightOutput && unitWeightLabel) {
+        unitWeightLabel.textContent = unitWeightLabelText || 'Unit Weight';
+        unitWeightOutput.textContent = `${formatNumber(unitWeightValue)} lb`;
+        unitWeightRow.removeAttribute('hidden');
+      } else if (unitWeightRow) {
+        unitWeightRow.setAttribute('hidden', '');
+      }
+
+      const materialName = materialSelect.options[materialSelect.selectedIndex]?.text || 'selected material';
+      setStatus('success', `Using ${materialName} density (${density.toFixed(3)} lb/in³).`);
+    };
+
+    const activatePrimaryPanel = (button) => {
+      const targetId = button.getAttribute('data-panel');
+
+      primaryNavButtons.forEach((btn) => {
+        const isActive = btn === button;
+        btn.classList.toggle('active', isActive);
+        btn.setAttribute('aria-selected', String(isActive));
+        btn.setAttribute('tabindex', isActive ? '0' : '-1');
+      });
+
+      contentPanels.forEach((panel) => {
+        const shouldShow = panel.id === targetId;
+        panel.toggleAttribute('hidden', !shouldShow);
+        panel.setAttribute('aria-hidden', String(!shouldShow));
+        panel.setAttribute('tabindex', shouldShow ? '0' : '-1');
+      });
+
+      if (targetId === 'calculator-panel') {
+        updateWeight();
+      }
+
+      button.focus();
+    };
+
+    primaryNavButtons.forEach((button) => {
+      button.addEventListener('click', () => activatePrimaryPanel(button));
+      button.addEventListener('keydown', (event) => {
+        const { key } = event;
+        if (!['ArrowRight', 'ArrowLeft', 'Home', 'End'].includes(key)) return;
+
+        event.preventDefault();
+        const currentIndex = primaryNavButtons.indexOf(button);
+
+        if (key === 'Home') {
+          activatePrimaryPanel(primaryNavButtons[0]);
+          return;
+        }
+
+        if (key === 'End') {
+          activatePrimaryPanel(primaryNavButtons[primaryNavButtons.length - 1]);
+          return;
+        }
+
+        const direction = key === 'ArrowRight' ? 1 : -1;
+        const nextIndex = (currentIndex + direction + primaryNavButtons.length) % primaryNavButtons.length;
+        activatePrimaryPanel(primaryNavButtons[nextIndex]);
+      });
+    });
+
+    gaugeTabs.forEach((tab) => {
+      tab.addEventListener('click', () => {
+        const targetId = tab.getAttribute('data-target');
+        const label = tab.textContent.trim();
+
+        gaugeTabs.forEach((btn) => {
+          const isActive = btn === tab;
+          btn.classList.toggle('active', isActive);
+          btn.setAttribute('aria-selected', String(isActive));
+          btn.setAttribute('tabindex', isActive ? '0' : '-1');
+        });
+
+        gaugeTables.forEach((section) => {
+          const shouldShow = section.id === targetId;
+          section.toggleAttribute('hidden', !shouldShow);
+          section.setAttribute('aria-hidden', String(!shouldShow));
+        });
+
+        panelTitle.textContent = `${label} Gauge Chart`;
+        tab.focus();
+      });
+    });
+
+    const activateDrillTab = (tab, focusTab = true) => {
+      const targetId = tab.getAttribute('data-target');
+      const label = tab.textContent.trim();
+
+      drillTabs.forEach((btn) => {
+        const isActive = btn === tab;
+        btn.classList.toggle('active', isActive);
+        btn.setAttribute('aria-selected', String(isActive));
+        btn.setAttribute('tabindex', isActive ? '0' : '-1');
+      });
+
+      drillTables.forEach((section) => {
+        const shouldShow = section.id === targetId;
+        section.toggleAttribute('hidden', !shouldShow);
+        section.setAttribute('aria-hidden', String(!shouldShow));
+      });
+
+      if (drillTitle) {
+        drillTitle.textContent = `${label.replace('Threads', '').trim()} Thread Tap Chart`;
+      }
+
+      if (focusTab) tab.focus();
+    };
+
+    drillTabs.forEach((tab) => {
+      tab.addEventListener('click', () => activateDrillTab(tab));
+      tab.addEventListener('keydown', (event) => {
+        const { key } = event;
+        if (!['ArrowRight', 'ArrowLeft', 'Home', 'End'].includes(key)) return;
+
+        event.preventDefault();
+        const currentIndex = drillTabs.indexOf(tab);
+
+        if (key === 'Home') {
+          activateDrillTab(drillTabs[0]);
+          return;
+        }
+
+        if (key === 'End') {
+          activateDrillTab(drillTabs[drillTabs.length - 1]);
+          return;
+        }
+
+        const direction = key === 'ArrowRight' ? 1 : -1;
+        const nextIndex = (currentIndex + direction + drillTabs.length) % drillTabs.length;
+        activateDrillTab(drillTabs[nextIndex]);
+      });
+    });
+
+    const activateShape = (tab, focusTab = true) => {
+      const targetShape = tab.getAttribute('data-shape');
+
+      shapeTabs.forEach((btn) => {
+        const isActive = btn === tab;
+        btn.classList.toggle('active', isActive);
+        btn.setAttribute('aria-selected', String(isActive));
+        btn.setAttribute('tabindex', isActive ? '0' : '-1');
+      });
+
+      shapePanels.forEach((panel) => {
+        const isTarget = panel.getAttribute('data-shape') === targetShape;
+        panel.toggleAttribute('hidden', !isTarget);
+        panel.setAttribute('aria-hidden', String(!isTarget));
+      });
+
+      updateWeight();
+      if (focusTab) tab.focus();
+    };
+
+    shapeTabs.forEach((tab) => {
+      tab.addEventListener('click', () => activateShape(tab));
+      tab.addEventListener('keydown', (event) => {
+        const { key } = event;
+        if (!['ArrowRight', 'ArrowLeft', 'Home', 'End'].includes(key)) return;
+
+        event.preventDefault();
+        const currentIndex = shapeTabs.indexOf(tab);
+
+        if (key === 'Home') {
+          activateShape(shapeTabs[0]);
+          return;
+        }
+
+        if (key === 'End') {
+          activateShape(shapeTabs[shapeTabs.length - 1]);
+          return;
+        }
+
+        const direction = key === 'ArrowRight' ? 1 : -1;
+        const nextIndex = (currentIndex + direction + shapeTabs.length) % shapeTabs.length;
+        activateShape(shapeTabs[nextIndex]);
+      });
+    });
+
+    const calculatorInputs = weightForm ? weightForm.querySelectorAll('input, select') : [];
+    calculatorInputs.forEach((input) => {
+      input.addEventListener('input', updateWeight);
+      input.addEventListener('change', updateWeight);
+      input.addEventListener('keydown', handleTabWrap);
+    });
+
+    if (shapeTabs.length) {
+      activateShape(shapeTabs[0], false);
+    }
+    updateWeight();
+
+    if (drillTabs.length) {
+      activateDrillTab(drillTabs[0], false);
+    }
+  </script>
+</body>
+</html>
