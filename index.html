@@ -3,14 +3,38 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link
-    rel="stylesheet"
-    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+  <meta
+    name="description"
+    content="SpecFoundry is a sheet metal gauge reference with interactive metal weight calculators and drill and tap charts for fabricators, machinists, and engineers."
   />
+  <meta
+    name="keywords"
+    content="sheet metal gauge chart, metal gauge thickness, metal weight calculator, drill and tap chart, fabrication reference, SpecFoundry"
+  />
+  <meta property="og:title" content="SpecFoundry | Sheet Metal Gauges, Weight Calculator & Drill Charts" />
+  <meta
+    property="og:description"
+    content="Free online reference tables for sheet metal gauges, density-based weight estimating tools, and drill & tap size charts covering steel, stainless, and aluminum."
+  />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://specfoundry.com" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="SpecFoundry Metal Data Platform" />
+  <meta
+    name="twitter:description"
+    content="Access sheet metal gauge charts, fabrication calculators, and drill & tap data in one place."
+  />
+  <link rel="preload" href="./assets/fonts/InterVariable.woff2" as="font" type="font/woff2" crossorigin />
   <title>SpecFoundry | Sheet Metal Gauge Reference</title>
   <style>
+    @font-face {
+      font-family: 'Inter';
+      src: url('./assets/fonts/InterVariable.woff2') format('woff2');
+      font-weight: 100 900;
+      font-display: swap;
+      font-style: normal;
+    }
+
     :root {
       color-scheme: light;
       --bg: radial-gradient(circle at top, #1d4ed8, #0f172a 58%);
@@ -59,7 +83,8 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: clamp(0.85rem, 2.6vw, 1.2rem) clamp(1rem, 3vw, 1.6rem);
+      gap: 1rem;
+      padding: 1rem 1.5rem;
       border-radius: 16px;
       background: var(--surface);
       border: 1px solid var(--stroke);
@@ -99,7 +124,7 @@
     .brand-name {
       margin: 0;
       display: inline-block;
-      font-size: clamp(1.5rem, 3.3vw, 2.05rem);
+      font-size: 1.85rem;
       font-weight: 660;
       text-transform: uppercase;
       letter-spacing: 0.085em;
@@ -126,34 +151,39 @@
       color: var(--muted);
       font-size: 0.78rem;
       letter-spacing: 0.18em;
+      margin: 0;
       text-transform: uppercase;
     }
 
     .primary-nav {
-      display: inline-flex;
-      gap: 0.4rem;
-      padding: 0.3rem;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 0.5rem;
+      padding: 0.45rem 0.5rem;
       background: rgba(15, 23, 42, 0.55);
-      border-radius: 999px;
+      border-radius: 16px;
       border: 1px solid rgba(148, 163, 184, 0.25);
       box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.05);
     }
 
     .primary-nav button {
       border: none;
-      border-radius: 999px;
-      padding: 0.5rem 1.3rem;
-      background: transparent;
+      border-radius: 14px;
+      padding: 0.55rem 1.15rem;
+      background: rgba(148, 163, 184, 0.08);
       color: var(--muted);
-      font-size: 0.92rem;
+      font-size: 0.88rem;
       font-weight: 500;
       cursor: pointer;
       transition: background 0.25s ease, color 0.25s ease;
+      min-width: 140px;
     }
 
     .primary-nav button.active {
       background: var(--accent-soft);
       color: var(--text);
+      box-shadow: inset 0 0 0 1px rgba(37, 99, 235, 0.35);
     }
 
     .primary-nav button:focus-visible {
@@ -164,6 +194,213 @@
     .content {
       display: grid;
       gap: clamp(1rem, 3vw, 1.4rem);
+    }
+
+    .weld-grid {
+      display: grid;
+      gap: clamp(0.9rem, 2.4vw, 1.3rem);
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    }
+
+    .weld-card {
+      background: var(--surface-soft);
+      border: 1px solid var(--stroke);
+      border-radius: 14px;
+      padding: clamp(0.9rem, 2.4vw, 1.1rem);
+      display: flex;
+      flex-direction: column;
+      gap: 0.7rem;
+    }
+
+    .weld-symbol-diagram {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.6rem;
+      border-radius: 12px;
+      background: rgba(148, 163, 184, 0.12);
+      border: 1px solid rgba(148, 163, 184, 0.25);
+    }
+
+    .weld-symbol-diagram svg {
+      width: 64px;
+      height: 32px;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .weld-card h3 {
+      margin: 0;
+      font-size: 1.05rem;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .weld-card p {
+      margin: 0;
+      color: var(--muted);
+    }
+
+    .gdt-grid {
+      display: grid;
+      gap: clamp(0.9rem, 2.4vw, 1.3rem);
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    }
+
+    .gdt-card {
+      background: var(--surface-soft);
+      border: 1px solid var(--stroke);
+      border-radius: 14px;
+      padding: clamp(0.9rem, 2.4vw, 1.1rem);
+      display: flex;
+      flex-direction: column;
+      gap: 0.7rem;
+    }
+
+    .gdt-symbol-diagram {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.6rem;
+      border-radius: 12px;
+      background: rgba(148, 163, 184, 0.12);
+      border: 1px solid rgba(148, 163, 184, 0.25);
+    }
+
+    .gdt-symbol-diagram svg {
+      width: 80px;
+      height: 40px;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .gdt-card h3 {
+      margin: 0;
+      font-size: 1.05rem;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .gdt-card p {
+      margin: 0;
+      color: var(--muted);
+    }
+
+    .gdt-legend {
+      margin-top: clamp(1rem, 3vw, 1.4rem);
+      display: grid;
+      gap: 0.4rem;
+      color: var(--muted);
+    }
+
+    .gdt-legend dt {
+      color: var(--text);
+      font-weight: 600;
+    }
+
+    .gdt-legend dd {
+      margin: 0;
+    }
+
+    .fit-grid {
+      display: grid;
+      gap: clamp(0.9rem, 2.4vw, 1.4rem);
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    }
+
+    .fit-card {
+      background: var(--surface-soft);
+      border: 1px solid var(--stroke);
+      border-radius: 16px;
+      padding: clamp(1rem, 2.6vw, 1.3rem);
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      min-width: 0;
+    }
+
+    .fit-card h3 {
+      margin: 0;
+      font-size: 1.1rem;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+
+    .fit-card p {
+      margin: 0;
+      color: var(--muted);
+    }
+
+    .fit-pairs {
+      display: grid;
+      gap: 0.75rem;
+    }
+
+    @media (min-width: 680px) {
+      .fit-pairs {
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      }
+    }
+
+    .fit-pair {
+      border: 1px solid rgba(148, 163, 184, 0.25);
+      border-radius: 12px;
+      padding: 0.65rem 0.75rem;
+      background: rgba(15, 23, 42, 0.45);
+      display: grid;
+      gap: 0.35rem;
+    }
+
+    .fit-pair h4 {
+      margin: 0;
+      font-size: 0.95rem;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: var(--text);
+    }
+
+    .fit-pair .fit-range {
+      margin: 0;
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    .fit-pair .fit-details {
+      margin: 0;
+      font-size: 0.88rem;
+      color: var(--muted);
+    }
+
+    .fit-legend {
+      margin-top: clamp(1rem, 3vw, 1.4rem);
+      display: grid;
+      gap: 0.4rem;
+      color: var(--muted);
+    }
+
+    .fit-legend dt {
+      color: var(--text);
+      font-weight: 600;
+    }
+
+    .fit-legend dd {
+      margin: 0;
+    }
+
+    .weld-legend {
+      margin-top: clamp(1rem, 3vw, 1.4rem);
+      display: grid;
+      gap: 0.4rem;
+      color: var(--muted);
+    }
+
+    .weld-legend dt {
+      color: var(--text);
+      font-weight: 600;
+    }
+
+    .weld-legend dd {
+      margin: 0;
     }
 
     .content-panel[hidden] {
@@ -580,13 +817,38 @@
         padding: clamp(0.75rem, 4vw, 1.2rem);
       }
 
+      .top-bar {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0.75rem;
+        padding: 0.9rem 1.2rem;
+        overflow: visible;
+        text-align: center;
+      }
+
       .top-brand {
-        flex-wrap: wrap;
+        justify-content: center;
+        flex-wrap: nowrap;
+        align-self: center;
       }
 
       .brand-badge {
         width: 2rem;
         height: 2rem;
+      }
+
+      .primary-nav {
+        width: 100%;
+        justify-content: flex-start;
+        overflow-x: auto;
+        gap: 0.4rem;
+        padding: 0.4rem 0.45rem;
+        scrollbar-width: thin;
+      }
+
+      .primary-nav button {
+        flex: 0 0 auto;
+        min-width: 120px;
       }
 
       table {
@@ -617,8 +879,8 @@
       <div class="top-brand">
         <span class="brand-badge" aria-hidden="true">SF</span>
         <div class="brand-text">
-          <span class="brand-name">SpecFoundry</span>
-          <span class="brand-tagline">Metal Data Platform</span>
+          <h1 class="brand-name">SpecFoundry</h1>
+          <p class="brand-tagline">Metal gauge charts, calculators, and drill & tap data.</p>
         </div>
       </div>
       <nav class="primary-nav" role="tablist" aria-label="Primary">
@@ -656,6 +918,39 @@
         >
           Drill & Tap Chart
         </button>
+        <button
+          type="button"
+          id="tab-weld"
+          role="tab"
+          aria-selected="false"
+          aria-controls="weld-panel"
+          tabindex="-1"
+          data-panel="weld-panel"
+        >
+          Weld Symbols
+        </button>
+        <button
+          type="button"
+          id="tab-gdt"
+          role="tab"
+          aria-selected="false"
+          aria-controls="gdt-panel"
+          tabindex="-1"
+          data-panel="gdt-panel"
+        >
+          GD&amp;T Symbols
+        </button>
+        <button
+          type="button"
+          id="tab-fits"
+          role="tab"
+          aria-selected="false"
+          aria-controls="fits-panel"
+          tabindex="-1"
+          data-panel="fits-panel"
+        >
+          Fit Tolerances
+        </button>
       </nav>
     </header>
 
@@ -683,7 +978,7 @@
           </div>
 
           <div class="card-body">
-            <p class="card-intro">Quickly scan typical gauge thickness and weight values for mild steel, stainless, and aluminum without excessive scrolling.</p>
+            <p class="card-intro">Interactive sheet metal gauge tables compare mild steel, stainless steel, and aluminum thickness in inch and metric units with weight per square foot.</p>
 
             <div class="table-container">
               <div class="table-scroll">
@@ -847,7 +1142,7 @@
           </div>
 
           <div class="card-body">
-            <p class="card-intro">Enter dimensions in inches. Weight is calculated using nominal densities for mild steel, stainless steel, and aluminum.</p>
+            <p class="card-intro">Enter imperial dimensions to estimate sheet, bar, or tube weight using default densities for mild steel, stainless steel, and aluminum.</p>
 
             <form class="calc-form" id="weight-form" novalidate>
               <div class="input-group">
@@ -987,11 +1282,14 @@
             <div class="tabs" role="tablist" aria-label="Thread series">
               <button type="button" class="active" data-group="drill" data-target="drill-unc" aria-controls="drill-unc" aria-selected="true" role="tab" tabindex="0">UNC Threads</button>
               <button type="button" data-group="drill" data-target="drill-unf" aria-controls="drill-unf" aria-selected="false" role="tab" tabindex="-1">UNF Threads</button>
+              <button type="button" data-group="drill" data-target="drill-metric-coarse" aria-controls="drill-metric-coarse" aria-selected="false" role="tab" tabindex="-1">Metric Coarse</button>
+              <button type="button" data-group="drill" data-target="drill-metric-fine" aria-controls="drill-metric-fine" aria-selected="false" role="tab" tabindex="-1">Metric Fine</button>
+              <button type="button" data-group="drill" data-target="drill-npt" aria-controls="drill-npt" aria-selected="false" role="tab" tabindex="-1">NPT Threads</button>
             </div>
           </div>
 
           <div class="card-body">
-            <p class="card-intro">Values follow common practices for tapping 75% thread engagement in steel. Verify against job specifications before cutting.</p>
+            <p class="card-intro">The drill and tap chart lists recommended tap drills, close-fit drills, and metric equivalents for UNC and UNF threads.</p>
 
             <div class="table-container">
               <div class="table-scroll">
@@ -1021,6 +1319,11 @@
                       <tr><td>3/8-16</td><td>0.3125</td><td>7.94</td><td>0.3860</td><td>9.80</td></tr>
                       <tr><td>7/16-14</td><td>0.3680</td><td>9.35</td><td>0.4380</td><td>11.13</td></tr>
                       <tr><td>1/2-13</td><td>0.4219</td><td>10.72</td><td>0.5000</td><td>12.70</td></tr>
+                      <tr><td>9/16-12</td><td>0.4844</td><td>12.30</td><td>0.5781</td><td>14.68</td></tr>
+                      <tr><td>5/8-11</td><td>0.5313</td><td>13.49</td><td>0.6563</td><td>16.68</td></tr>
+                      <tr><td>3/4-10</td><td>0.6563</td><td>16.68</td><td>0.8125</td><td>20.64</td></tr>
+                      <tr><td>7/8-9</td><td>0.7656</td><td>19.45</td><td>0.9375</td><td>23.81</td></tr>
+                      <tr><td>1-8</td><td>0.8750</td><td>22.23</td><td>1.0625</td><td>27.00</td></tr>
                     </tbody>
                   </table>
                 </section>
@@ -1051,6 +1354,86 @@
                       <tr><td>3/8-24</td><td>0.3320</td><td>8.43</td><td>0.3860</td><td>9.80</td></tr>
                       <tr><td>7/16-20</td><td>0.3860</td><td>9.80</td><td>0.4380</td><td>11.13</td></tr>
                       <tr><td>1/2-20</td><td>0.4219</td><td>10.72</td><td>0.5000</td><td>12.70</td></tr>
+                      <tr><td>9/16-18</td><td>0.5156</td><td>13.10</td><td>0.5938</td><td>15.08</td></tr>
+                      <tr><td>5/8-18</td><td>0.5781</td><td>14.68</td><td>0.6875</td><td>17.46</td></tr>
+                      <tr><td>3/4-16</td><td>0.6875</td><td>17.46</td><td>0.8281</td><td>21.04</td></tr>
+                      <tr><td>7/8-14</td><td>0.8125</td><td>20.64</td><td>0.9844</td><td>25.01</td></tr>
+                      <tr><td>1-12</td><td>0.9063</td><td>23.02</td><td>1.0625</td><td>27.00</td></tr>
+                    </tbody>
+                  </table>
+                </section>
+
+                <section id="drill-metric-coarse" class="drill-table" role="tabpanel" aria-hidden="true" aria-labelledby="drill-title" hidden>
+                  <table>
+                    <thead>
+                      <tr>
+                        <th scope="col">Metric Thread</th>
+                        <th scope="col">Tap Drill (mm)</th>
+                        <th scope="col">Tap Drill (in)</th>
+                        <th scope="col">Close Clearance (mm)</th>
+                        <th scope="col">Close Clearance (in)</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr><td>M3 × 0.5</td><td>2.50</td><td>0.098</td><td>3.40</td><td>0.134</td></tr>
+                      <tr><td>M4 × 0.7</td><td>3.30</td><td>0.130</td><td>4.30</td><td>0.169</td></tr>
+                      <tr><td>M5 × 0.8</td><td>4.20</td><td>0.165</td><td>5.30</td><td>0.209</td></tr>
+                      <tr><td>M6 × 1.0</td><td>5.00</td><td>0.197</td><td>6.40</td><td>0.252</td></tr>
+                      <tr><td>M8 × 1.25</td><td>6.80</td><td>0.268</td><td>8.40</td><td>0.331</td></tr>
+                      <tr><td>M10 × 1.5</td><td>8.50</td><td>0.335</td><td>10.50</td><td>0.413</td></tr>
+                      <tr><td>M12 × 1.75</td><td>10.20</td><td>0.402</td><td>13.00</td><td>0.512</td></tr>
+                      <tr><td>M16 × 2.0</td><td>14.00</td><td>0.551</td><td>17.00</td><td>0.669</td></tr>
+                      <tr><td>M20 × 2.5</td><td>17.50</td><td>0.689</td><td>21.00</td><td>0.827</td></tr>
+                    </tbody>
+                  </table>
+                </section>
+
+                <section id="drill-metric-fine" class="drill-table" role="tabpanel" aria-hidden="true" aria-labelledby="drill-title" hidden>
+                  <table>
+                    <thead>
+                      <tr>
+                        <th scope="col">Metric Thread</th>
+                        <th scope="col">Tap Drill (mm)</th>
+                        <th scope="col">Tap Drill (in)</th>
+                        <th scope="col">Close Clearance (mm)</th>
+                        <th scope="col">Close Clearance (in)</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr><td>M5 × 0.5</td><td>4.50</td><td>0.177</td><td>5.50</td><td>0.217</td></tr>
+                      <tr><td>M6 × 0.75</td><td>5.25</td><td>0.207</td><td>6.60</td><td>0.260</td></tr>
+                      <tr><td>M8 × 1.0</td><td>7.00</td><td>0.276</td><td>8.20</td><td>0.323</td></tr>
+                      <tr><td>M10 × 1.25</td><td>8.80</td><td>0.346</td><td>10.20</td><td>0.402</td></tr>
+                      <tr><td>M12 × 1.5</td><td>10.50</td><td>0.413</td><td>12.60</td><td>0.496</td></tr>
+                      <tr><td>M14 × 1.5</td><td>12.50</td><td>0.492</td><td>14.60</td><td>0.575</td></tr>
+                      <tr><td>M16 × 1.5</td><td>14.50</td><td>0.571</td><td>16.60</td><td>0.654</td></tr>
+                      <tr><td>M20 × 1.5</td><td>18.50</td><td>0.728</td><td>20.60</td><td>0.811</td></tr>
+                    </tbody>
+                  </table>
+                </section>
+
+                <section id="drill-npt" class="drill-table" role="tabpanel" aria-hidden="true" aria-labelledby="drill-title" hidden>
+                  <table>
+                    <thead>
+                      <tr>
+                        <th scope="col">Pipe Size</th>
+                        <th scope="col">Tap Drill (in)</th>
+                        <th scope="col">Tap Drill (mm)</th>
+                        <th scope="col">Threads/In</th>
+                        <th scope="col">Pitch (mm)</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr><td>1/16 NPT</td><td>0.2420</td><td>6.15</td><td>27</td><td>0.94</td></tr>
+                      <tr><td>1/8 NPT</td><td>0.3320</td><td>8.43</td><td>27</td><td>0.94</td></tr>
+                      <tr><td>1/4 NPT</td><td>0.4375</td><td>11.11</td><td>18</td><td>1.41</td></tr>
+                      <tr><td>3/8 NPT</td><td>0.5781</td><td>14.68</td><td>18</td><td>1.41</td></tr>
+                      <tr><td>1/2 NPT</td><td>0.7188</td><td>18.26</td><td>14</td><td>1.81</td></tr>
+                      <tr><td>3/4 NPT</td><td>0.9219</td><td>23.42</td><td>14</td><td>1.81</td></tr>
+                      <tr><td>1 NPT</td><td>1.1875</td><td>30.16</td><td>11.5</td><td>2.21</td></tr>
+                      <tr><td>1 1/4 NPT</td><td>1.4375</td><td>36.51</td><td>11.5</td><td>2.21</td></tr>
+                      <tr><td>1 1/2 NPT</td><td>1.6875</td><td>42.86</td><td>11.5</td><td>2.21</td></tr>
+                      <tr><td>2 NPT</td><td>1.9219</td><td>48.82</td><td>11.5</td><td>2.21</td></tr>
                     </tbody>
                   </table>
                 </section>
@@ -1061,10 +1444,444 @@
           </div>
         </article>
       </section>
+
+      <section
+        id="weld-panel"
+        class="content-panel"
+        data-panel
+        role="tabpanel"
+        aria-labelledby="tab-weld"
+        aria-hidden="true"
+        tabindex="-1"
+        hidden
+      >
+        <article class="card">
+          <div class="card-header">
+            <div>
+              <h2 id="weld-title">Weld Symbol Reference</h2>
+              <p>Interpret common AWS/AISC welding symbols directly from fabrication drawings.</p>
+            </div>
+          </div>
+
+          <div class="card-body">
+            <p class="card-intro">Quick sketches and callouts for frequently specified weld symbols used in shop drawings and field fit-up notes.</p>
+
+            <div class="weld-grid">
+              <article class="weld-card">
+                <div class="weld-symbol-diagram" role="img" aria-label="Fillet weld symbol">
+                  <svg viewBox="0 0 64 32" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+                    <line x1="6" y1="24" x2="58" y2="24" stroke="#94a3b8" stroke-width="2" />
+                    <polygon points="24,24 24,10 36,24" fill="rgba(148, 163, 184, 0.6)" stroke="#cbd5e1" stroke-width="1.5" />
+                  </svg>
+                </div>
+                <h3>Fillet Weld</h3>
+                <p>Triangle symbol indicates a fillet weld. Leg size is shown to the left of the symbol and length to the right.</p>
+              </article>
+
+              <article class="weld-card">
+                <div class="weld-symbol-diagram" role="img" aria-label="Square groove weld symbol">
+                  <svg viewBox="0 0 64 32" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+                    <line x1="6" y1="24" x2="58" y2="24" stroke="#94a3b8" stroke-width="2" />
+                    <rect x="26" y="10" width="12" height="14" fill="rgba(148, 163, 184, 0.6)" stroke="#cbd5e1" stroke-width="1.5" />
+                  </svg>
+                </div>
+                <h3>Square Groove</h3>
+                <p>Parallel plate edges receive a square groove weld. Groove depth or effective throat appears to the left of the symbol.</p>
+              </article>
+
+              <article class="weld-card">
+                <div class="weld-symbol-diagram" role="img" aria-label="V-groove weld symbol">
+                  <svg viewBox="0 0 64 32" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+                    <line x1="6" y1="24" x2="58" y2="24" stroke="#94a3b8" stroke-width="2" />
+                    <path d="M24 10 L32 24 L40 10" fill="none" stroke="#cbd5e1" stroke-width="2" />
+                  </svg>
+                </div>
+                <h3>V-Groove</h3>
+                <p>Beveled members form a V-groove. Included angle and root opening are specified with the symbol.</p>
+              </article>
+
+              <article class="weld-card">
+                <div class="weld-symbol-diagram" role="img" aria-label="Plug or slot weld symbol">
+                  <svg viewBox="0 0 64 32" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+                    <line x1="6" y1="24" x2="58" y2="24" stroke="#94a3b8" stroke-width="2" />
+                    <circle cx="32" cy="18" r="6" fill="rgba(148, 163, 184, 0.6)" stroke="#cbd5e1" stroke-width="1.5" />
+                  </svg>
+                </div>
+                <h3>Plug / Slot</h3>
+                <p>Circular or elongated welds joining overlapping plates. Symbol shows hole diameter and spacing.</p>
+              </article>
+
+              <article class="weld-card">
+                <div class="weld-symbol-diagram" role="img" aria-label="Spot weld symbol">
+                  <svg viewBox="0 0 64 32" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+                    <line x1="6" y1="24" x2="58" y2="24" stroke="#94a3b8" stroke-width="2" />
+                    <circle cx="32" cy="12" r="6" fill="none" stroke="#cbd5e1" stroke-width="1.5" />
+                    <line x1="32" y1="18" x2="32" y2="24" stroke="#cbd5e1" stroke-width="1.5" />
+                  </svg>
+                </div>
+                <h3>Spot Weld</h3>
+                <p>Resistance or spot welds are shown with a circle on the reference line. Diameter and pitch appear alongside.</p>
+              </article>
+
+              <article class="weld-card">
+                <div class="weld-symbol-diagram" role="img" aria-label="Field weld flag symbol">
+                  <svg viewBox="0 0 64 32" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+                    <line x1="6" y1="24" x2="36" y2="24" stroke="#94a3b8" stroke-width="2" />
+                    <line x1="36" y1="24" x2="36" y2="8" stroke="#cbd5e1" stroke-width="2" />
+                    <polyline points="36,12 48,18 36,18" fill="rgba(148, 163, 184, 0.6)" stroke="#cbd5e1" stroke-width="1.5" />
+                    <line x1="36" y1="24" x2="58" y2="24" stroke="#94a3b8" stroke-width="2" stroke-dasharray="4 3" />
+                  </svg>
+                </div>
+                <h3>Field Weld</h3>
+                <p>Flag at the reference line intersection calls for welding to be performed in the field rather than in shop fabrication.</p>
+              </article>
+
+              <article class="weld-card">
+                <div class="weld-symbol-diagram" role="img" aria-label="Bevel groove weld symbol">
+                  <svg viewBox="0 0 64 32" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+                    <line x1="6" y1="24" x2="58" y2="24" stroke="#94a3b8" stroke-width="2" />
+                    <path d="M24 24 L24 10 L40 24" fill="#94a3b8" stroke="#cbd5e1" stroke-width="1.5" />
+                    <line x1="24" y1="10" x2="32" y2="10" stroke="#cbd5e1" stroke-width="1.5" />
+                  </svg>
+                </div>
+                <h3>Bevel Groove</h3>
+                <p>Single-bevel groove welds show a sloped member on one side of the joint. Symbol designates groove depth and root opening.</p>
+              </article>
+
+              <article class="weld-card">
+                <div class="weld-symbol-diagram" role="img" aria-label="J-groove weld symbol">
+                  <svg viewBox="0 0 64 32" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+                    <line x1="6" y1="24" x2="58" y2="24" stroke="#94a3b8" stroke-width="2" />
+                    <path d="M26 24 L26 10 C26 10 42 10 42 24" fill="#94a3b8" stroke="#cbd5e1" stroke-width="1.5" />
+                  </svg>
+                </div>
+                <h3>J-Groove</h3>
+                <p>J-groove welds combine a straight edge and a radius. Use when only one member can be prepared with a bevel.</p>
+              </article>
+
+              <article class="weld-card">
+                <div class="weld-symbol-diagram" role="img" aria-label="Flare bevel weld symbol">
+                  <svg viewBox="0 0 64 32" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+                    <line x1="6" y1="24" x2="58" y2="24" stroke="#94a3b8" stroke-width="2" />
+                    <path d="M24 24 Q32 8 40 24" fill="none" stroke="#cbd5e1" stroke-width="2" />
+                  </svg>
+                </div>
+                <h3>Flare Bevel</h3>
+                <p>Used when round or curved members meet a flat surface. Required weld size is listed to the left of the symbol.</p>
+              </article>
+
+              <article class="weld-card">
+                <div class="weld-symbol-diagram" role="img" aria-label="Seam weld symbol">
+                  <svg viewBox="0 0 64 32" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+                    <line x1="6" y1="24" x2="58" y2="24" stroke="#94a3b8" stroke-width="2" />
+                    <line x1="24" y1="14" x2="40" y2="14" stroke="#cbd5e1" stroke-width="2" />
+                    <line x1="24" y1="18" x2="40" y2="18" stroke="#cbd5e1" stroke-width="2" />
+                  </svg>
+                </div>
+                <h3>Seam Weld</h3>
+                <p>Parallel lines on the reference line indicate a seam or continuous resistance weld. Pitch and length appear with the symbol.</p>
+              </article>
+
+              <article class="weld-card">
+                <div class="weld-symbol-diagram" role="img" aria-label="Weld all around symbol">
+                  <svg viewBox="0 0 64 32" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+                    <line x1="6" y1="24" x2="58" y2="24" stroke="#94a3b8" stroke-width="2" />
+                    <line x1="32" y1="24" x2="32" y2="10" stroke="#cbd5e1" stroke-width="2" />
+                    <circle cx="32" cy="10" r="6" fill="none" stroke="#cbd5e1" stroke-width="1.5" />
+                  </svg>
+                </div>
+                <h3>Weld All Around</h3>
+                <p>A circle at the reference line intersection means the weld continues completely around the joint.</p>
+              </article>
+            </div>
+
+            <dl class="weld-legend">
+              <dt>Arrow Side / Other Side</dt>
+              <dd>Symbols placed below the reference line apply to the arrow side of the joint; symbols above apply to the opposite side.</dd>
+              <dt>Tail Callouts</dt>
+              <dd>The tail is used for process notes such as SMAW, GMAW, or backing requirements. Omit the tail when no notes are needed.</dd>
+              <dt>Finish Symbols</dt>
+              <dd>Letters such as G, M, or C indicate grinding, machining, or chipping of the finished weld surface.</dd>
+            </dl>
+          </div>
+        </article>
+      </section>
+
+      <section
+        id="gdt-panel"
+        class="content-panel"
+        data-panel
+        role="tabpanel"
+        aria-labelledby="tab-gdt"
+        aria-hidden="true"
+        tabindex="-1"
+        hidden
+      >
+        <article class="card">
+          <div class="card-header">
+            <div>
+              <h2 id="gdt-title">GD&amp;T Symbol Reference</h2>
+              <p>Common geometric characteristic symbols for ASME Y14.5 feature control frames.</p>
+            </div>
+          </div>
+
+          <div class="card-body">
+            <p class="card-intro">Use these quick sketches to identify form, orientation, location, and runout symbols when reading drawings or programming inspection.</p>
+
+            <div class="gdt-grid">
+              <article class="gdt-card">
+                <div class="gdt-symbol-diagram" role="img" aria-label="Straightness symbol">
+                  <svg viewBox="0 0 80 40" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+                    <rect x="10" y="12" width="60" height="16" rx="4" ry="4" fill="none" stroke="#cbd5e1" stroke-width="2" />
+                    <line x1="20" y1="12" x2="20" y2="28" stroke="#cbd5e1" stroke-width="2" />
+                    <line x1="60" y1="12" x2="60" y2="28" stroke="#cbd5e1" stroke-width="2" />
+                  </svg>
+                </div>
+                <h3>Straightness</h3>
+                <p>Controls how much a surface or axis may deviate from a perfect straight line along its length.</p>
+              </article>
+
+              <article class="gdt-card">
+                <div class="gdt-symbol-diagram" role="img" aria-label="Flatness symbol">
+                  <svg viewBox="0 0 80 40" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+                    <rect x="10" y="14" width="60" height="12" rx="4" ry="4" fill="none" stroke="#cbd5e1" stroke-width="2" />
+                  </svg>
+                </div>
+                <h3>Flatness</h3>
+                <p>Limits the allowable out-of-plane deviation for a surface without reference to a datum.</p>
+              </article>
+
+              <article class="gdt-card">
+                <div class="gdt-symbol-diagram" role="img" aria-label="Circularity symbol">
+                  <svg viewBox="0 0 80 40" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+                    <circle cx="40" cy="20" r="12" fill="none" stroke="#cbd5e1" stroke-width="2" />
+                    <circle cx="40" cy="20" r="8" fill="none" stroke="#94a3b8" stroke-width="1.5" stroke-dasharray="4 3" />
+                  </svg>
+                </div>
+                <h3>Circularity</h3>
+                <p>Controls roundness of a surface cross-section. Measured independent of a datum.</p>
+              </article>
+
+              <article class="gdt-card">
+                <div class="gdt-symbol-diagram" role="img" aria-label="Cylindricity symbol">
+                  <svg viewBox="0 0 80 40" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+                    <rect x="22" y="10" width="36" height="20" rx="10" ry="10" fill="none" stroke="#cbd5e1" stroke-width="2" />
+                    <rect x="26" y="12" width="28" height="16" rx="8" ry="8" fill="none" stroke="#94a3b8" stroke-width="1.5" stroke-dasharray="5 3" />
+                  </svg>
+                </div>
+                <h3>Cylindricity</h3>
+                <p>Combines circularity and straightness to limit how much a cylindrical surface may vary.</p>
+              </article>
+
+              <article class="gdt-card">
+                <div class="gdt-symbol-diagram" role="img" aria-label="Perpendicularity symbol">
+                  <svg viewBox="0 0 80 40" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+                    <line x1="30" y1="10" x2="30" y2="30" stroke="#cbd5e1" stroke-width="2" />
+                    <line x1="30" y1="30" x2="60" y2="30" stroke="#cbd5e1" stroke-width="2" />
+                    <rect x="34" y="18" width="12" height="12" fill="rgba(148, 163, 184, 0.6)" stroke="#cbd5e1" stroke-width="1.5" />
+                  </svg>
+                </div>
+                <h3>Perpendicularity</h3>
+                <p>Ensures a surface or axis is 90° to a datum plane or axis within the specified tolerance zone.</p>
+              </article>
+
+              <article class="gdt-card">
+                <div class="gdt-symbol-diagram" role="img" aria-label="Parallelism symbol">
+                  <svg viewBox="0 0 80 40" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+                    <line x1="22" y1="12" x2="22" y2="28" stroke="#cbd5e1" stroke-width="2" />
+                    <line x1="34" y1="12" x2="34" y2="28" stroke="#cbd5e1" stroke-width="2" />
+                    <rect x="38" y="14" width="22" height="12" fill="rgba(148, 163, 184, 0.6)" stroke="#cbd5e1" stroke-width="1.5" />
+                  </svg>
+                </div>
+                <h3>Parallelism</h3>
+                <p>Controls how evenly separated a surface or axis must be from a datum plane.</p>
+              </article>
+
+              <article class="gdt-card">
+                <div class="gdt-symbol-diagram" role="img" aria-label="Position symbol">
+                  <svg viewBox="0 0 80 40" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+                    <circle cx="27" cy="20" r="8" fill="none" stroke="#cbd5e1" stroke-width="2" />
+                    <path d="M27 12 L27 20 L35 20" fill="none" stroke="#cbd5e1" stroke-width="2" />
+                    <circle cx="53" cy="20" r="8" fill="none" stroke="#94a3b8" stroke-width="1.5" stroke-dasharray="3 2" />
+                  </svg>
+                </div>
+                <h3>Position</h3>
+                <p>Defines the allowable deviation of a feature's location relative to datums; core for true position callouts.</p>
+              </article>
+
+              <article class="gdt-card">
+                <div class="gdt-symbol-diagram" role="img" aria-label="Concentricity symbol">
+                  <svg viewBox="0 0 80 40" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+                    <circle cx="40" cy="20" r="12" fill="none" stroke="#cbd5e1" stroke-width="2" />
+                    <circle cx="40" cy="20" r="6" fill="rgba(148, 163, 184, 0.6)" stroke="#94a3b8" stroke-width="1.5" />
+                  </svg>
+                </div>
+                <h3>Concentricity</h3>
+                <p>Keeps median points of a feature common to a datum axis; compares centerlines rather than surfaces.</p>
+              </article>
+
+              <article class="gdt-card">
+                <div class="gdt-symbol-diagram" role="img" aria-label="Symmetry symbol">
+                  <svg viewBox="0 0 80 40" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+                    <line x1="40" y1="10" x2="40" y2="30" stroke="#cbd5e1" stroke-width="2" />
+                    <polyline points="26,30 40,20 54,30" fill="none" stroke="#94a3b8" stroke-width="2" />
+                  </svg>
+                </div>
+                <h3>Symmetry</h3>
+                <p>Controls how evenly a feature is balanced about a datum plane; evaluates median points on opposing surfaces.</p>
+              </article>
+
+              <article class="gdt-card">
+                <div class="gdt-symbol-diagram" role="img" aria-label="Circular runout symbol">
+                  <svg viewBox="0 0 80 40" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+                    <circle cx="54" cy="20" r="10" fill="none" stroke="#cbd5e1" stroke-width="2" />
+                    <circle cx="54" cy="20" r="6" fill="none" stroke="#94a3b8" stroke-width="1.5" stroke-dasharray="4 3" />
+                    <line x1="20" y1="10" x2="20" y2="30" stroke="#cbd5e1" stroke-width="2" />
+                  </svg>
+                </div>
+                <h3>Circular Runout</h3>
+                <p>Limits variation of a surface as it is rotated 360° about a datum axis; checks circular elements individually.</p>
+              </article>
+
+              <article class="gdt-card">
+                <div class="gdt-symbol-diagram" role="img" aria-label="Total runout symbol">
+                  <svg viewBox="0 0 80 40" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+                    <rect x="32" y="10" width="20" height="20" rx="10" ry="10" fill="none" stroke="#cbd5e1" stroke-width="2" />
+                    <path d="M20 10 L20 30" stroke="#cbd5e1" stroke-width="2" />
+                    <path d="M60 10 L60 30" stroke="#cbd5e1" stroke-width="2" stroke-dasharray="3 2" />
+                  </svg>
+                </div>
+                <h3>Total Runout</h3>
+                <p>Controls surface variation across the entire rotation and length of a feature relative to a datum axis.</p>
+              </article>
+            </div>
+
+            <dl class="gdt-legend">
+              <dt>Feature Control Frame</dt>
+              <dd>GD&amp;T symbols live inside a frame with tolerance values and datum references. Read from left to right.</dd>
+              <dt>Material Condition Modifiers</dt>
+              <dd>Symbols such as Ⓜ (MMC), Ⓛ (LMC), and Ⓢ (RFS) modify tolerance zones based on feature size.</dd>
+              <dt>Datum Feature Symbols</dt>
+              <dd>Datums establish the coordinate system; ensure datum callouts on drawings match inspection setup.</dd>
+            </dl>
+          </div>
+        </article>
+      </section>
+
+      <section
+        id="fits-panel"
+        class="content-panel"
+        data-panel
+        role="tabpanel"
+        aria-labelledby="tab-fits"
+        aria-hidden="true"
+        tabindex="-1"
+        hidden
+      >
+        <article class="card">
+          <div class="card-header">
+            <div>
+              <h2 id="fits-title">Tolerances by Fit Class</h2>
+              <p>Compare typical clearance, transition, and interference fits using ISO tolerance zones and practical ranges.</p>
+            </div>
+          </div>
+
+          <div class="card-body">
+            <p class="card-intro">Match hole and shaft tolerance designations to achieve the required running clearance or interference for rotating components and press fits.</p>
+
+            <div class="fit-grid">
+              <article class="fit-card">
+                <h3>Clearance Fits (Sliding &amp; Running)</h3>
+                <p>Maintain positive space between mating parts for free movement, lubrication, or easy assembly.</p>
+                <div class="fit-pairs">
+                  <div class="fit-pair">
+                    <h4>Loose Running — H11/c11</h4>
+                    <p class="fit-range">Clearance: 0.25–0.60 mm</p>
+                    <p class="fit-details">Low-precision sliding where contamination is likely.</p>
+                  </div>
+                  <div class="fit-pair">
+                    <h4>Free Running — H9/d9</h4>
+                    <p class="fit-range">Clearance: 0.13–0.36 mm</p>
+                    <p class="fit-details">General-purpose machine fits; hand assembly easy.</p>
+                  </div>
+                  <div class="fit-pair">
+                    <h4>Close Running — H8/f7</h4>
+                    <p class="fit-range">Clearance: 0.02–0.09 mm</p>
+                    <p class="fit-details">Guided shafts or slides needing consistent motion.</p>
+                  </div>
+                  <div class="fit-pair">
+                    <h4>Sliding Fit — H7/g6</h4>
+                    <p class="fit-range">Clearance: 0.01–0.04 mm</p>
+                    <p class="fit-details">Tooling fixtures and precision ways with lubrication.</p>
+                  </div>
+                </div>
+              </article>
+
+              <article class="fit-card">
+                <h3>Transition Fits (Line-to-Light Interference)</h3>
+                <p>Allow slight clearance or interference depending on actual sizes, providing accurate alignment with manageable assembly force.</p>
+                <div class="fit-pairs">
+                  <div class="fit-pair">
+                    <h4>Line Fit — H7/k6</h4>
+                    <p class="fit-range">Range: -0.02 to +0.02 mm</p>
+                    <p class="fit-details">Alignment dowels, slip fit at smaller diameters.</p>
+                  </div>
+                  <div class="fit-pair">
+                    <h4>Sliding Transition — H7/j6</h4>
+                    <p class="fit-range">Range: -0.01 to +0.03 mm</p>
+                    <p class="fit-details">Gear hubs and couplings needing accurate concentricity.</p>
+                  </div>
+                  <div class="fit-pair">
+                    <h4>Snug Transition — H7/m6</h4>
+                    <p class="fit-range">Range: 0 to +0.03 mm</p>
+                    <p class="fit-details">Armatures, bearings, and assemblies requiring precise location.</p>
+                  </div>
+                </div>
+              </article>
+
+              <article class="fit-card">
+                <h3>Interference Fits (Press &amp; Shrink)</h3>
+                <p>Ensure negative clearance so parts must be pressed or heated for assembly, creating a rigid joint.</p>
+                <div class="fit-pairs">
+                  <div class="fit-pair">
+                    <h4>Light Press — H7/p6</h4>
+                    <p class="fit-range">Interference: 0.01–0.05 mm</p>
+                    <p class="fit-details">Pulleys, medium torque bushings; hand press or mild heat.</p>
+                  </div>
+                  <div class="fit-pair">
+                    <h4>Medium Press — H7/r6</h4>
+                    <p class="fit-range">Interference: 0.03–0.08 mm</p>
+                    <p class="fit-details">Heavy-duty hubs or rigid couplings requiring arbor press.</p>
+                  </div>
+                  <div class="fit-pair">
+                    <h4>Shrink Fit — H7/u6</h4>
+                    <p class="fit-range">Interference: 0.06–0.14 mm</p>
+                    <p class="fit-details">High-torque gears and critical rotating members; heat assembly.</p>
+                  </div>
+                  <div class="fit-pair">
+                    <h4>Heavy Interference — H7/x6</h4>
+                    <p class="fit-range">Interference: 0.09–0.20 mm</p>
+                    <p class="fit-details">Permanent structural joints; heat differential or hydraulic press.</p>
+                  </div>
+                </div>
+              </article>
+            </div>
+
+            <dl class="fit-legend">
+              <dt>ISO Fit Notation</dt>
+              <dd>Capital letters denote hole tolerance zones, lowercase for shafts (e.g., H7/g6). Combine to target desired clearance.</dd>
+              <dt>Production Notes</dt>
+              <dd>Transition and interference fits often require temperature control or press-force calculations—note assembly method on drawings.</dd>
+              <dt>Surface Finish</dt>
+              <dd>Consistent finish improves repeatability. Check bearings, seals, and lubrication when choosing a fit class.</dd>
+            </dl>
+          </div>
+        </article>
+      </section>
     </main>
 
     <footer>
-      Reference values only. Confirm with applicable standards before use.
+      SpecFoundry metal data tables are reference values only. Confirm with applicable standards before fabrication or machining.
     </footer>
   </div>
 
