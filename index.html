@@ -98,22 +98,6 @@
       gap: 0.85rem;
     }
 
-    .brand-badge {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      width: 2.1rem;
-      height: 2.1rem;
-      border-radius: 0.75rem;
-      background: linear-gradient(135deg, rgba(226, 232, 240, 0.85), rgba(148, 163, 184, 0.6));
-      color: #1f2933;
-      font-weight: 600;
-      letter-spacing: 0.08em;
-      font-size: 0.78rem;
-      text-transform: uppercase;
-      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.55);
-    }
-
     .brand-text {
       display: flex;
       flex-direction: column;
@@ -156,15 +140,18 @@
     }
 
     .primary-nav {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 0.5rem;
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 0.55rem;
       padding: 0.45rem 0.5rem;
       background: rgba(15, 23, 42, 0.55);
       border-radius: 16px;
       border: 1px solid rgba(148, 163, 184, 0.25);
       box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.05);
+    }
+
+    .primary-nav-buttons {
+      display: contents;
     }
 
     .primary-nav button {
@@ -177,7 +164,12 @@
       font-weight: 500;
       cursor: pointer;
       transition: background 0.25s ease, color 0.25s ease;
-      min-width: 140px;
+      min-height: 48px;
+      text-decoration: none;
+      text-align: center;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
     }
 
     .primary-nav button.active {
@@ -189,6 +181,12 @@
     .primary-nav button:focus-visible {
       outline: 2px solid rgba(37, 99, 235, 0.7);
       outline-offset: 2px;
+    }
+
+    .primary-nav button:hover {
+      background: rgba(37, 99, 235, 0.22);
+      color: var(--text);
+      box-shadow: inset 0 0 0 1px rgba(37, 99, 235, 0.35);
     }
 
     .content {
@@ -535,6 +533,45 @@
       font-size: 0.95rem;
     }
 
+    .card-section {
+      display: grid;
+      gap: 0.55rem;
+    }
+
+    .card-section h3 {
+      margin: 0;
+      font-size: 1.05rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .card-section p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.55;
+    }
+
+    .card-section ul,
+    .card-section dl {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      display: grid;
+      gap: 0.4rem;
+      color: var(--muted);
+      line-height: 1.55;
+    }
+
+    .card-section li,
+    .card-section dd {
+      margin: 0;
+    }
+
+    .card-section dt {
+      font-weight: 600;
+      color: var(--text);
+    }
+
     .table-container {
       border: 1px solid rgba(148, 163, 184, 0.24);
       border-radius: 16px;
@@ -832,23 +869,14 @@
         align-self: center;
       }
 
-      .brand-badge {
-        width: 2rem;
-        height: 2rem;
-      }
-
       .primary-nav {
         width: 100%;
-        justify-content: flex-start;
-        overflow-x: auto;
-        gap: 0.4rem;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
         padding: 0.4rem 0.45rem;
-        scrollbar-width: thin;
       }
 
       .primary-nav button {
-        flex: 0 0 auto;
-        min-width: 120px;
+        min-height: 44px;
       }
 
       table {
@@ -858,6 +886,12 @@
       .shape-tabs button {
         flex: 1 1 100%;
         padding: 0.35rem 0.7rem;
+      }
+    }
+
+    @media (max-width: 420px) {
+      .primary-nav {
+        grid-template-columns: repeat(1, minmax(0, 1fr));
       }
     }
 
@@ -877,80 +911,111 @@
   <div class="page">
     <header class="top-bar">
       <div class="top-brand">
-        <span class="brand-badge" aria-hidden="true">SF</span>
         <div class="brand-text">
           <h1 class="brand-name">SpecFoundry</h1>
           <p class="brand-tagline">Metal gauge charts, calculators, and drill & tap data.</p>
         </div>
       </div>
-      <nav class="primary-nav" role="tablist" aria-label="Primary">
-        <button
-          type="button"
-          id="tab-reference"
-          class="active"
-          role="tab"
-          aria-selected="true"
-          aria-controls="reference-panel"
-          tabindex="0"
-          data-panel="reference-panel"
-        >
-          Gauge Reference
-        </button>
-        <button
-          type="button"
-          id="tab-calculator"
-          role="tab"
-          aria-selected="false"
-          aria-controls="calculator-panel"
-          tabindex="-1"
-          data-panel="calculator-panel"
-        >
-          Weight Calculator
-        </button>
-        <button
-          type="button"
-          id="tab-drill"
-          role="tab"
-          aria-selected="false"
-          aria-controls="drill-panel"
-          tabindex="-1"
-          data-panel="drill-panel"
-        >
-          Drill & Tap Chart
-        </button>
-        <button
-          type="button"
-          id="tab-weld"
-          role="tab"
-          aria-selected="false"
-          aria-controls="weld-panel"
-          tabindex="-1"
-          data-panel="weld-panel"
-        >
-          Weld Symbols
-        </button>
-        <button
-          type="button"
-          id="tab-gdt"
-          role="tab"
-          aria-selected="false"
-          aria-controls="gdt-panel"
-          tabindex="-1"
-          data-panel="gdt-panel"
-        >
-          GD&amp;T Symbols
-        </button>
-        <button
-          type="button"
-          id="tab-fits"
-          role="tab"
-          aria-selected="false"
-          aria-controls="fits-panel"
-          tabindex="-1"
-          data-panel="fits-panel"
-        >
-          Fit Tolerances
-        </button>
+      <nav class="primary-nav" aria-label="Primary">
+        <div class="primary-nav-buttons" role="tablist" aria-label="Primary tool panels">
+          <button
+            type="button"
+            id="tab-reference"
+            class="active"
+            role="tab"
+            aria-selected="true"
+            aria-controls="reference-panel"
+            tabindex="0"
+            data-panel="reference-panel"
+            data-hash="reference"
+          >
+            Gauge Reference
+          </button>
+          <button
+            type="button"
+            id="tab-calculator"
+            role="tab"
+            aria-selected="false"
+            aria-controls="calculator-panel"
+            tabindex="-1"
+            data-panel="calculator-panel"
+            data-hash="calculator"
+          >
+            Weight Calculator
+          </button>
+          <button
+            type="button"
+            id="tab-drill"
+            role="tab"
+            aria-selected="false"
+            aria-controls="drill-panel"
+            tabindex="-1"
+            data-panel="drill-panel"
+            data-hash="drill"
+          >
+            Drill & Tap Chart
+          </button>
+          <button
+            type="button"
+            id="tab-weld"
+            role="tab"
+            aria-selected="false"
+            aria-controls="weld-panel"
+            tabindex="-1"
+            data-panel="weld-panel"
+            data-hash="weld"
+          >
+            Weld Symbols
+          </button>
+          <button
+            type="button"
+            id="tab-gdt"
+            role="tab"
+            aria-selected="false"
+            aria-controls="gdt-panel"
+            tabindex="-1"
+            data-panel="gdt-panel"
+            data-hash="gdt"
+          >
+            GD&amp;T Symbols
+          </button>
+          <button
+            type="button"
+            id="tab-fits"
+            role="tab"
+            aria-selected="false"
+            aria-controls="fits-panel"
+            tabindex="-1"
+            data-panel="fits-panel"
+            data-hash="fits"
+          >
+            Fit Tolerances
+          </button>
+          <button
+            type="button"
+            id="tab-surface"
+            role="tab"
+            aria-selected="false"
+            aria-controls="surface-panel"
+            tabindex="-1"
+            data-panel="surface-panel"
+            data-hash="surface"
+          >
+            Surface Finishes
+          </button>
+          <button
+            type="button"
+            id="tab-material"
+            role="tab"
+            aria-selected="false"
+            aria-controls="material-panel"
+            tabindex="-1"
+            data-panel="material-panel"
+            data-hash="material"
+          >
+            Material Properties
+          </button>
+        </div>
       </nav>
     </header>
 
@@ -1111,6 +1176,277 @@
                   </table>
                 </section>
               </div>
+            </div>
+          </div>
+        </article>
+      </section>
+
+      <section
+        id="surface-panel"
+        class="content-panel"
+        data-panel
+        role="tabpanel"
+        aria-labelledby="tab-surface"
+        aria-hidden="true"
+        tabindex="-1"
+        hidden
+      >
+        <article class="card">
+          <div class="card-header">
+            <div>
+              <h2>Surface Finish Overview</h2>
+              <p>Interpret roughness (Ra) callouts and relate them to achievable processes, appearance, and finishing effort.</p>
+            </div>
+          </div>
+          <div class="card-body">
+            <p class="card-intro">Roughness average values appear in microinches (&micro;in) or micrometers (&micro;m). Finish choice drives corrosion performance, coating adhesion, and fit with mating hardware.</p>
+            <div class="table-container" role="region" aria-label="Surface finish roughness table">
+              <div class="table-scroll">
+                <table>
+                  <thead>
+                    <tr>
+                      <th scope="col">Finish</th>
+                      <th scope="col">Ra (&micro;in)</th>
+                      <th scope="col">Ra (&micro;m)</th>
+                      <th scope="col">Typical Process</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr><td>Mill / Hot Rolled</td><td>250-400</td><td>6.3-10.0</td><td>Hot rolling, flame cut descaled</td></tr>
+                    <tr><td>As-Fabricated Sheet</td><td>125-200</td><td>3.2-5.0</td><td>Cold rolled sheet, shear or laser edge</td></tr>
+                    <tr><td>Brushed / No. 4</td><td>60-100</td><td>1.5-2.5</td><td>Abrasive belt or Scotch-Brite brushing</td></tr>
+                    <tr><td>Machined</td><td>32-63</td><td>0.8-1.6</td><td>End milling, turning, face milling</td></tr>
+                    <tr><td>Fine Ground</td><td>16-32</td><td>0.4-0.8</td><td>Surface grinding with finishing pass</td></tr>
+                    <tr><td>Polished</td><td>8-16</td><td>0.2-0.4</td><td>Progressive buffing with compound</td></tr>
+                    <tr><td>Mirror / No. 8</td><td>4-8</td><td>0.1-0.2</td><td>Multi-step buffing and coloring</td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="card-header">
+            <div>
+              <h2>Finish Selection Guide</h2>
+              <p>Match surface targets to forming, cosmetic expectations, and corrosion protection before freezing the process.</p>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="card-section">
+              <h3>Mechanical Finishes</h3>
+              <ul>
+                <li><strong>Brushed / Directional:</strong> Uniform grain hides handling marks; ideal for exposed stainless panels and consumer enclosures.</li>
+                <li><strong>Vibratory / Random:</strong> Abrasive media tumbles parts for an even sheen—great for deburring before coating.</li>
+                <li><strong>Grinding:</strong> Tight tolerance surfaces or weld blend-out before painting; fine wheels reach Ra 16-32 &micro;in.</li>
+              </ul>
+            </div>
+            <div class="card-section">
+              <h3>Chemical &amp; Electrochemical</h3>
+              <ul>
+                <li><strong>Pickling &amp; Passivation:</strong> Removes scale and restores corrosion resistance after welding or hot work.</li>
+                <li><strong>Anodizing:</strong> Controlled oxide on aluminum for corrosion resistance and color options.</li>
+                <li><strong>Electropolish:</strong> Dissolves surface peaks for Ra &lt; 8 &micro;in; common in sanitary and semiconductor hardware.</li>
+              </ul>
+            </div>
+            <div class="card-section">
+              <h3>Protective Coatings</h3>
+              <ul>
+                <li><strong>Powder Coat:</strong> Durable thermoset film that hides minor imperfections; aim for Ra &lt;= 125 &micro;in before coating.</li>
+                <li><strong>Zinc Plating / Galvanizing:</strong> Sacrificial corrosion protection for steel. Hot-dip galvanizing leaves a heavy spangle (~200 &micro;in).</li>
+                <li><strong>Conversion Coating:</strong> Chromate or phosphate pretreatments boost paint adhesion and corrosion resistance.</li>
+              </ul>
+            </div>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="card-header">
+            <div>
+              <h2>Specification Notes</h2>
+              <p>Use the right standards, symbols, and inspection notes to prevent rework.</p>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="card-section">
+              <h3>Common References</h3>
+              <dl>
+                <dt>ASME B46.1</dt>
+                <dd>Defines surface texture parameters, sampling lengths, and symbol usage.</dd>
+                <dt>ASTM A480</dt>
+                <dd>Stainless sheet finish designations (No. 1, 2B, 2D, 4, 8) and tolerances.</dd>
+                <dt>ISO 1302</dt>
+                <dd>International guidance for surface texture symbols on technical drawings.</dd>
+              </dl>
+            </div>
+            <div class="card-section">
+              <h3>Drawing Tips</h3>
+              <ul>
+                <li>Use the Ra symbol (e.g., <span>Ra 63</span>) near critical surfaces and call out units.</li>
+                <li>Specify grain direction for brushed finishes relative to edges or features.</li>
+                <li>Include post-weld finishing requirements (grind flush, blend to match No. 4 grain) to align expectations.</li>
+              </ul>
+            </div>
+          </div>
+        </article>
+      </section>
+
+      <section
+        id="material-panel"
+        class="content-panel"
+        data-panel
+        role="tabpanel"
+        aria-labelledby="tab-material"
+        aria-hidden="true"
+        tabindex="-1"
+        hidden
+      >
+        <article class="card">
+          <div class="card-header">
+            <div>
+              <h2>Material Property Quick Reference</h2>
+              <p>Baseline mechanical data for common fabrication steels, aluminums, and stainless steels.</p>
+            </div>
+          </div>
+          <div class="card-body">
+            <p class="card-intro">Strength values are shown in ksi with metric equivalents. Densities help estimate weight; notes call out weldability, formability, and corrosion behaviour.</p>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="card-header">
+            <div>
+              <h2>Mild &amp; Low-Alloy Steels</h2>
+              <p>Plate, sheet, and bar grades widely stocked for fabrication and machining.</p>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="table-container" role="region" aria-label="Mild steel property table">
+              <div class="table-scroll">
+                <table>
+                  <thead>
+                    <tr>
+                      <th scope="col">Grade</th>
+                      <th scope="col">Yield (ksi / MPa)</th>
+                      <th scope="col">Tensile (ksi / MPa)</th>
+                      <th scope="col">Elongation (%)</th>
+                      <th scope="col">Density (lb/in³)</th>
+                      <th scope="col">Notes</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr><td>A36 (Plate)</td><td>36 / 250</td><td>58-80 / 400-550</td><td>20</td><td>0.284</td><td>General structural steel; readily welded and formed.</td></tr>
+                    <tr><td>A572-50</td><td>50 / 345</td><td>65 / 450</td><td>18</td><td>0.284</td><td>Higher strength plate with good weldability and toughness.</td></tr>
+                    <tr><td>1018 (Cold Finish)</td><td>54 / 370</td><td>63 / 435</td><td>15</td><td>0.284</td><td>Machinable low-carbon steel; tight tolerance bar stock.</td></tr>
+                    <tr><td>A1011 HSLAS-F</td><td>50 / 345</td><td>65 / 450</td><td>18</td><td>0.284</td><td>Formable high-strength sheet for lighter brackets.</td></tr>
+                    <tr><td>AR400</td><td>155 / 1070</td><td>200 / 1380</td><td>10</td><td>0.284</td><td>Abrasion-resistant plate; limited formability—preheat before welding.</td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="card-header">
+            <div>
+              <h2>Aluminum Alloys</h2>
+              <p>Common sheet and extrusion alloys with temper designations used on shop floors.</p>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="table-container" role="region" aria-label="Aluminum alloy property table">
+              <div class="table-scroll">
+                <table>
+                  <thead>
+                    <tr>
+                      <th scope="col">Alloy / Temper</th>
+                      <th scope="col">Yield (ksi / MPa)</th>
+                      <th scope="col">Tensile (ksi / MPa)</th>
+                      <th scope="col">Elongation (%)</th>
+                      <th scope="col">Density (lb/in³)</th>
+                      <th scope="col">Notes</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr><td>3003-H14</td><td>21 / 145</td><td>22 / 150</td><td>10</td><td>0.097</td><td>Excellent formability; non-heat-treatable and cost effective.</td></tr>
+                    <tr><td>5052-H32</td><td>28 / 195</td><td>33 / 230</td><td>12</td><td>0.0975</td><td>Marine-grade corrosion resistance; bends well to 2T.</td></tr>
+                    <tr><td>6061-T6</td><td>40 / 275</td><td>45 / 310</td><td>12</td><td>0.0975</td><td>Versatile extrusion/sheet alloy; good machinability.</td></tr>
+                    <tr><td>6061-T651 (Plate)</td><td>35 / 240</td><td>42 / 290</td><td>12</td><td>0.0975</td><td>Stress-relieved plate for stable machining fixtures.</td></tr>
+                    <tr><td>7075-T6</td><td>73 / 505</td><td>83 / 570</td><td>11</td><td>0.101</td><td>High-strength aerospace alloy; avoid welding when possible.</td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="card-header">
+            <div>
+              <h2>Stainless Steels</h2>
+              <p>Austenitic, ferritic, and precipitation-hardening grades with shop-friendly notes.</p>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="table-container" role="region" aria-label="Stainless steel property table">
+              <div class="table-scroll">
+                <table>
+                  <thead>
+                    <tr>
+                      <th scope="col">Grade / Condition</th>
+                      <th scope="col">Yield (ksi / MPa)</th>
+                      <th scope="col">Tensile (ksi / MPa)</th>
+                      <th scope="col">Elongation (%)</th>
+                      <th scope="col">Density (lb/in³)</th>
+                      <th scope="col">Notes</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr><td>304 Annealed</td><td>30 / 205</td><td>73 / 505</td><td>40</td><td>0.289</td><td>Most common stainless; great formability and corrosion resistance.</td></tr>
+                    <tr><td>304L Annealed</td><td>25 / 170</td><td>70 / 485</td><td>40</td><td>0.289</td><td>Low-carbon variant that resists weld sensitisation.</td></tr>
+                    <tr><td>316L Annealed</td><td>29 / 200</td><td>75 / 515</td><td>40</td><td>0.289</td><td>Molybdenum improves chloride resistance for marine/food service.</td></tr>
+                    <tr><td>409 Ferritic</td><td>35 / 240</td><td>55 / 380</td><td>20</td><td>0.280</td><td>Automotive exhaust grade; good oxidation resistance, modest corrosion resistance.</td></tr>
+                    <tr><td>17-4 PH (H900)</td><td>160 / 1100</td><td>190 / 1310</td><td>10</td><td>0.280</td><td>Precipitation-hardening stainless; age to H1150 for easier machining.</td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="card-header">
+            <div>
+              <h2>Design Considerations</h2>
+              <p>Balance welding, forming, and corrosion concerns when specifying alloys.</p>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="card-section">
+              <h3>Welding &amp; Heat Input</h3>
+              <ul>
+                <li>Match filler metals to base chemistry and strength; use low-hydrogen processes on high-strength steels.</li>
+                <li>Heat-treated aluminums (6061-T6, 7075) soften in the HAZ—plan for post-weld heat treat or design around it.</li>
+                <li>Stainless retains heat, so plan for distortion control and post-weld cleaning.</li>
+              </ul>
+            </div>
+            <div class="card-section">
+              <h3>Forming Allowances</h3>
+              <ul>
+                <li>HSLA steels often need ≥2T bend radii to prevent cracking—check mill bend tables.</li>
+                <li>Run test bends when switching aluminum tempers; 5052-H32 outperforms 6061-T6 in tight bends.</li>
+                <li>Form precipitation-hardening stainless in the solution-treated condition before aging.</li>
+              </ul>
+            </div>
+            <div class="card-section">
+              <h3>Corrosion &amp; Coatings</h3>
+              <ul>
+                <li>Painting carbon steel? Target Ra &lt;= 125 &micro;in and a clean, dry surface for adhesion.</li>
+                <li>Isolate aluminum from stainless in wet environments to avoid galvanic corrosion.</li>
+                <li>Passivate or pickle stainless after fabrication to restore corrosion resistance.</li>
+              </ul>
             </div>
           </div>
         </article>
@@ -1796,22 +2132,22 @@
                 <div class="fit-pairs">
                   <div class="fit-pair">
                     <h4>Loose Running — H11/c11</h4>
-                    <p class="fit-range">Clearance: 0.25–0.60 mm</p>
+                    <p class="fit-range">Clearance: 0.25-0.60 mm</p>
                     <p class="fit-details">Low-precision sliding where contamination is likely.</p>
                   </div>
                   <div class="fit-pair">
                     <h4>Free Running — H9/d9</h4>
-                    <p class="fit-range">Clearance: 0.13–0.36 mm</p>
+                    <p class="fit-range">Clearance: 0.13-0.36 mm</p>
                     <p class="fit-details">General-purpose machine fits; hand assembly easy.</p>
                   </div>
                   <div class="fit-pair">
                     <h4>Close Running — H8/f7</h4>
-                    <p class="fit-range">Clearance: 0.02–0.09 mm</p>
+                    <p class="fit-range">Clearance: 0.02-0.09 mm</p>
                     <p class="fit-details">Guided shafts or slides needing consistent motion.</p>
                   </div>
                   <div class="fit-pair">
                     <h4>Sliding Fit — H7/g6</h4>
-                    <p class="fit-range">Clearance: 0.01–0.04 mm</p>
+                    <p class="fit-range">Clearance: 0.01-0.04 mm</p>
                     <p class="fit-details">Tooling fixtures and precision ways with lubrication.</p>
                   </div>
                 </div>
@@ -1845,22 +2181,22 @@
                 <div class="fit-pairs">
                   <div class="fit-pair">
                     <h4>Light Press — H7/p6</h4>
-                    <p class="fit-range">Interference: 0.01–0.05 mm</p>
+                    <p class="fit-range">Interference: 0.01-0.05 mm</p>
                     <p class="fit-details">Pulleys, medium torque bushings; hand press or mild heat.</p>
                   </div>
                   <div class="fit-pair">
                     <h4>Medium Press — H7/r6</h4>
-                    <p class="fit-range">Interference: 0.03–0.08 mm</p>
+                    <p class="fit-range">Interference: 0.03-0.08 mm</p>
                     <p class="fit-details">Heavy-duty hubs or rigid couplings requiring arbor press.</p>
                   </div>
                   <div class="fit-pair">
                     <h4>Shrink Fit — H7/u6</h4>
-                    <p class="fit-range">Interference: 0.06–0.14 mm</p>
+                    <p class="fit-range">Interference: 0.06-0.14 mm</p>
                     <p class="fit-details">High-torque gears and critical rotating members; heat assembly.</p>
                   </div>
                   <div class="fit-pair">
                     <h4>Heavy Interference — H7/x6</h4>
-                    <p class="fit-range">Interference: 0.09–0.20 mm</p>
+                    <p class="fit-range">Interference: 0.09-0.20 mm</p>
                     <p class="fit-details">Permanent structural joints; heat differential or hydraulic press.</p>
                   </div>
                 </div>
@@ -2134,7 +2470,7 @@
       setStatus('success', `Using ${materialName} density (${density.toFixed(3)} lb/in³).`);
     };
 
-    const activatePrimaryPanel = (button) => {
+    const activatePrimaryPanel = (button, { focus = true, updateHash = true } = {}) => {
       const targetId = button.getAttribute('data-panel');
 
       primaryNavButtons.forEach((btn) => {
@@ -2155,7 +2491,56 @@
         updateWeight();
       }
 
-      button.focus();
+      if (updateHash) {
+        const hashValue = button.getAttribute('data-hash');
+        if (typeof hashValue === 'string') {
+          const baseUrl = `${window.location.pathname}${window.location.search}`;
+          const newHash = hashValue ? `#${hashValue}` : '';
+          if (window.location.hash !== newHash) {
+            history.replaceState(null, '', `${baseUrl}${newHash}`);
+          }
+        }
+      }
+
+      if (focus) {
+        button.focus();
+      }
+    };
+
+    const activatePanelById = (panelId, options = {}) => {
+      if (!panelId) return false;
+      const button = primaryNavButtons.find((btn) => btn.getAttribute('data-panel') === panelId);
+      if (!button) return false;
+      activatePrimaryPanel(button, options);
+      return true;
+    };
+
+    const activatePanelByHash = (hashValue, options = {}) => {
+      if (!hashValue) return false;
+      const lowerHash = hashValue.toLowerCase();
+      const buttonByHash = primaryNavButtons.find((btn) => (btn.getAttribute('data-hash') || '').toLowerCase() === lowerHash);
+      if (buttonByHash) {
+        activatePrimaryPanel(buttonByHash, options);
+        return true;
+      }
+
+      const buttonByPanel = primaryNavButtons.find((btn) => {
+        const panel = (btn.getAttribute('data-panel') || '').toLowerCase();
+        return panel === lowerHash || panel === `${lowerHash}-panel`;
+      });
+
+      if (buttonByPanel) {
+        activatePrimaryPanel(buttonByPanel, options);
+        return true;
+      }
+
+      return false;
+    };
+
+    const handleHashNavigation = (shouldFocus = false) => {
+      const rawHash = window.location.hash.replace(/^#/, '');
+      if (!rawHash) return false;
+      return activatePanelByHash(rawHash, { focus: shouldFocus, updateHash: false });
     };
 
     primaryNavButtons.forEach((button) => {
@@ -2182,6 +2567,14 @@
         activatePrimaryPanel(primaryNavButtons[nextIndex]);
       });
     });
+
+    window.addEventListener('hashchange', () => {
+      handleHashNavigation(true);
+    });
+
+    if (!handleHashNavigation(false)) {
+      activatePrimaryPanel(primaryNavButtons[0], { focus: false });
+    }
 
     gaugeTabs.forEach((tab) => {
       tab.addEventListener('click', () => {
