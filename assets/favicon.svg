@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="title desc">
+  <title id="title">SpecFoundry Favicon</title>
+  <desc id="desc">Stylized S lettermark inside a rounded gradient badge</desc>
+  <defs>
+    <radialGradient id="badgeGradient" cx="30%" cy="20%" r="80%">
+      <stop offset="0%" stop-color="#4f83ff" />
+      <stop offset="55%" stop-color="#2563eb" />
+      <stop offset="100%" stop-color="#0f172a" />
+    </radialGradient>
+    <linearGradient id="letterGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#e2e8f0" />
+      <stop offset="100%" stop-color="#94a3b8" />
+    </linearGradient>
+  </defs>
+  <rect x="4" y="4" width="56" height="56" rx="14" fill="url(#badgeGradient)" />
+  <path
+    fill="none"
+    stroke="url(#letterGradient)"
+    stroke-width="6"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+    d="M42 18c-6-4-16-4-20 3s3 12 10 12 12 5 8 11-14 7-20 2"
+  />
+</svg>
